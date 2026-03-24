@@ -83,7 +83,7 @@ const VENTURES = [
     description: 'Trusted Automotive Repair & Services. Professional, reliable, and expert vehicle maintenance — because not everything is digital, yet.',
     category: 'Automotive',
     icon: 'Wrench',
-    externalLink: 'https://biskaken.rpnmore.com'
+    externalLink: 'https://biskakenauto.rpnmore.com'
   },
   {
     id: 'researchclaw',
@@ -319,6 +319,76 @@ async function startServer() {
       console.log("Save post to DB skipped (Saved to Memory)");
     }
     res.json({ success: true });
+  });
+
+  app.delete("/api/posts/:id", async (req, res) => {
+    const { id } = req.params;
+    memoryPosts = memoryPosts.filter(p => p.id !== id);
+    try {
+      if (db) await db.collection("posts").doc(id).delete();
+      if (process.env.DATABASE_URL) {
+        await pool.query(`DELETE FROM posts WHERE id = $1`, [id]);
+      }
+    } catch (err) {
+      console.log("Delete post from DB skipped");
+    }
+    res.json({ success: true });
+  });
+
+  // Serve uploaded files as static
+  const uploadsDir = path.join(process.cwd(), 'uploads', 'backgrounds');
+  if (!fs.existsSync(uploadsDir)) fs.mkdirSync(uploadsDir, { recursive: true });
+  app.use('/uploads', express.static(path.join(process.cwd(), 'uploads')));
+
+  // Default background URLs (Unsplash — no hardcoding in frontend)
+  let memoryBackgrounds: string[] = [
+    'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1920&q=80',
+    'https://images.unsplash.com/photo-1518770660439-4636190af475?w=1920&q=80',
+  ];
+
+  app.get('/api/home-backgrounds', async (_req, res) => {
+    try {
+      if (db) {
+        const doc = await db.collection('config').doc('home-backgrounds').get();
+        if (doc.exists) {
+          const data = doc.data();
+          if (data?.urls?.length) return res.json({ urls: data.urls });
+        }
+      }
+    } catch {}
+    res.json({ urls: memoryBackgrounds });
+  });
+
+  app.post('/api/home-backgrounds', async (req, res) => {
+    const { urls, images } = req.body;
+
+    // Handle base64 file uploads
+    if (Array.isArray(images) && images.length > 0) {
+      const savedUrls: string[] = [];
+      for (const img of images) {
+        const matches = img.data.match(/^data:([A-Za-z-+/]+);base64,(.+)$/);
+        if (!matches) continue;
+        const ext = matches[1].split('/')[1] || 'jpg';
+        const filename = `bg-${Date.now()}-${Math.random().toString(36).slice(2)}.${ext}`;
+        const filepath = path.join(process.cwd(), 'uploads', 'backgrounds', filename);
+        fs.writeFileSync(filepath, Buffer.from(matches[2], 'base64'));
+        savedUrls.push(`/uploads/backgrounds/${filename}`);
+      }
+      if (savedUrls.length > 0) {
+        memoryBackgrounds = savedUrls;
+        try { if (db) await db.collection('config').doc('home-backgrounds').set({ urls: savedUrls }); } catch {}
+        return res.json({ success: true, urls: savedUrls });
+      }
+    }
+
+    // Handle plain URL array
+    if (Array.isArray(urls) && urls.length > 0) {
+      memoryBackgrounds = urls;
+      try { if (db) await db.collection('config').doc('home-backgrounds').set({ urls }); } catch {}
+      return res.json({ success: true, urls });
+    }
+
+    res.status(400).json({ error: 'Provide urls or images array' });
   });
 
   // Vite middleware for development

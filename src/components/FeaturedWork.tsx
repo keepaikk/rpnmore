@@ -14,7 +14,7 @@ export default function About() {
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="text-xs font-bold uppercase tracking-widest text-[#F5A623] mb-4"
+              className="text-xs font-semibold uppercase tracking-widest text-[#F5A623] mb-4"
             >
               Who We Are
             </motion.div>
@@ -23,7 +23,7 @@ export default function About() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
-              className="text-4xl md:text-6xl font-black text-black dark:text-white tracking-tighter leading-none mb-8"
+              className="text-3xl md:text-5xl font-bold text-black dark:text-white tracking-tight leading-none mb-8"
             >
               RIPPLE &<br />
               <span className="text-[#F5A623] italic">MORE</span>{' '}
@@ -34,7 +34,7 @@ export default function About() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.2 }}
-              className="text-zinc-600 dark:text-zinc-400 text-lg leading-relaxed mb-6"
+              className="text-zinc-600 dark:text-zinc-400 text-base font-normal leading-relaxed mb-6"
             >
               Ripple & More Limited is a digital asset and technology company founded in Ghana and operating from Dubai — building tools, platforms, and services that empower Africans to participate in the digital economy.
             </motion.p>
@@ -43,7 +43,7 @@ export default function About() {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.3 }}
-              className="text-zinc-600 dark:text-zinc-400 text-lg leading-relaxed mb-10"
+              className="text-zinc-600 dark:text-zinc-400 text-base font-normal leading-relaxed mb-10"
             >
               From crypto education to AI automation, e-commerce, branding, and automotive services — we operate across multiple sectors with one unified goal: <span className="text-[#F5A623] font-bold">To make digital wealth accessible to every African.</span>
             </motion.p>
@@ -75,24 +75,39 @@ export default function About() {
           {/* Right — venture grid preview */}
           <div className="grid grid-cols-2 gap-4">
             {[
-              { emoji: '📱', name: 'TechAfrik', desc: 'AI & Blockchain Media' },
-              { emoji: '🛒', name: 'Dobuygoods', desc: 'Crypto Commerce' },
-              { emoji: '🎨', name: 'SignupGhana', desc: 'Branding & Signage' },
-              { emoji: '🔧', name: 'Biskaken', desc: 'Auto Services' },
-              { emoji: '🤖', name: 'ResearchClaw', desc: 'AI Automation' },
+              { emoji: '📱', name: 'TechAfrik', desc: 'AI & Blockchain Media', id: 'techafrik', color: '#F5A623' },
+              { emoji: '🛒', name: 'Dobuygoods', desc: 'Crypto Commerce', id: 'dobuygoods', color: '#00C2FF' },
+              { emoji: '🎨', name: 'SignupGhana', desc: 'Branding & Signage', id: 'signupghana', color: '#A855F7' },
+              { emoji: '🔧', name: 'Biskaken', desc: 'Auto Services', id: 'biskaken', color: '#EF4444' },
+              { emoji: '⚡', name: 'ResearchClaw', desc: 'AI Automation', id: 'researchclaw', color: '#10B981' },
             ].map((v, i) => (
-              <motion.div
+              <motion.a
                 key={v.name}
+                href={`/venture/${v.id}`}
                 initial={{ opacity: 0, scale: 0.9 }}
                 whileInView={{ opacity: 1, scale: 1 }}
                 viewport={{ once: true }}
                 transition={{ delay: i * 0.1 }}
-                className={`p-6 rounded-2xl border border-white/5 bg-white dark:bg-white/[0.03] hover:border-[#F5A623]/30 hover:bg-[#F5A623]/5 transition-all group ${i === 4 ? 'col-span-2' : ''}`}
+                className={`p-6 rounded-2xl border border-black/5 dark:border-white/5 bg-white dark:bg-white/[0.03] transition-all group cursor-pointer overflow-hidden relative ${i === 4 ? 'col-span-2' : ''}`}
               >
-                <span className="text-3xl mb-3 block">{v.emoji}</span>
-                <p className="font-black text-black dark:text-white group-hover:text-[#F5A623] transition-colors">{v.name}</p>
-                <p className="text-xs text-zinc-500 mt-1">{v.desc}</p>
-              </motion.div>
+                <div
+                  className="absolute inset-0 opacity-0 group-hover:opacity-100 transition-opacity duration-500 rounded-2xl"
+                  style={{ background: `radial-gradient(circle at top left, ${v.color}15, transparent 70%)` }}
+                />
+                <div
+                  className="absolute inset-0 rounded-2xl border opacity-0 group-hover:opacity-100 transition-opacity duration-300"
+                  style={{ borderColor: `${v.color}40` }}
+                />
+                <div className="relative">
+                  <span className="text-3xl mb-3 block">{v.emoji}</span>
+                  <p className="font-semibold text-black dark:text-white transition-colors" style={{}}>
+                    <span className="group-hover:text-[color:var(--c)] transition-colors" style={{ ['--c' as any]: v.color }}>
+                      {v.name}
+                    </span>
+                  </p>
+                  <p className="text-xs mt-1" style={{ color: v.color + '99' }}>{v.desc}</p>
+                </div>
+              </motion.a>
             ))}
           </div>
         </div>

@@ -9,6 +9,9 @@ export interface Service {
   icon: string;
   category: string;
   externalLink?: string;
+  features?: string[];
+  tagline?: string;
+  color?: string;
 }
 
 export interface BlogPost {

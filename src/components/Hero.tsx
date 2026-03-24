@@ -1,124 +1,235 @@
-import { motion } from 'motion/react';
+import { motion, AnimatePresence } from 'motion/react';
 import { ArrowRight } from 'lucide-react';
+import { useState, useEffect, useRef } from 'react';
+
+const ROTATING_WORDS = ['DIGITAL', 'CRYPTO', 'AI-DRIVEN', 'REAL'];
+
+const FALLBACK_BACKGROUNDS = [
+  'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1920&q=80',
+  'https://images.unsplash.com/photo-1518770660439-4636190af475?w=1920&q=80',
+];
 
 export default function Hero() {
+  const [wordIndex, setWordIndex] = useState(0);
+  const [backgrounds, setBackgrounds] = useState<string[]>(FALLBACK_BACKGROUNDS);
+  const [bgIndex, setBgIndex] = useState(0);
+  const timerRef = useRef<ReturnType<typeof setInterval> | null>(null);
+
+  // Rotating headline word
+  useEffect(() => {
+    const interval = setInterval(() => {
+      setWordIndex(i => (i + 1) % ROTATING_WORDS.length);
+    }, 2000);
+    return () => clearInterval(interval);
+  }, []);
+
+  // Fetch backgrounds from API
+  useEffect(() => {
+    fetch('/api/home-backgrounds')
+      .then(r => r.json())
+      .then(data => { if (data.urls?.length) setBackgrounds(data.urls); })
+      .catch(() => {}); // keep fallback
+  }, []);
+
+  // Auto-advance background every 9 seconds
+  useEffect(() => {
+    if (backgrounds.length < 2) return;
+    timerRef.current = setInterval(() => {
+      setBgIndex(i => (i + 1) % backgrounds.length);
+    }, 9000);
+    return () => { if (timerRef.current) clearInterval(timerRef.current); };
+  }, [backgrounds]);
+
   return (
-    <section className="relative min-h-screen flex flex-col items-center justify-center pt-32 pb-20 px-6 bg-white dark:bg-[#0A0F1E] transition-colors duration-300 overflow-hidden">
-      {/* Background gradients */}
-      <div className="absolute inset-0 pointer-events-none">
-        <div className="absolute top-1/4 left-1/4 w-96 h-96 bg-[#F5A623]/10 rounded-full blur-[140px]" />
-        <div className="absolute bottom-1/4 right-1/4 w-96 h-96 bg-[#00C2FF]/10 rounded-full blur-[140px]" />
-        {/* Subtle Africa outline dots */}
-        <div className="absolute inset-0 opacity-[0.03] dark:opacity-[0.06]"
-          style={{ backgroundImage: 'radial-gradient(circle, #F5A623 1px, transparent 1px)', backgroundSize: '40px 40px' }}
+    <section id="home" className="relative min-h-screen flex flex-col items-center justify-center pt-32 pb-20 px-6 bg-[#0A0F1E] overflow-hidden">
+
+      {/* ── Background image slideshow ── */}
+      <div className="absolute inset-0 overflow-hidden pointer-events-none" aria-hidden="true">
+        <AnimatePresence>
+          {backgrounds.map((url, i) =>
+            i === bgIndex ? (
+              <motion.div
+                key={url + i}
+                initial={{ opacity: 0, scale: 1.08 }}
+                animate={{ opacity: 0.35, scale: 1 }}
+                exit={{ opacity: 0, scale: 1.04 }}
+                transition={{ duration: 1.8, ease: 'easeInOut' }}
+                className="absolute inset-0 bg-cover bg-center bg-no-repeat"
+                style={{
+                  backgroundImage: `url(${url})`,
+                  animation: 'heroZoom 18s ease-in-out infinite alternate',
+                }}
+              />
+            ) : null
+          )}
+        </AnimatePresence>
+
+        {/* Dark gradient overlay — improves text readability */}
+        <div className="absolute inset-0 bg-gradient-to-b from-[#0A0F1E]/60 via-[#0A0F1E]/40 to-[#0A0F1E]/80" />
+        <div className="absolute inset-0 bg-[#0A0F1E]/30" />
+
+        {/* Animated grid */}
+        <div className="absolute inset-0 opacity-[0.06]"
+          style={{
+            backgroundImage: `linear-gradient(rgba(245,166,35,0.6) 1px, transparent 1px), linear-gradient(90deg, rgba(245,166,35,0.6) 1px, transparent 1px)`,
+            backgroundSize: '60px 60px'
+          }}
         />
+
+        {/* Colour blobs */}
+        <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-[#F5A623]/10 rounded-full blur-[150px]" />
+        <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-[#00C2FF]/10 rounded-full blur-[150px]" />
       </div>
 
-      <div className="max-w-7xl mx-auto text-center relative z-10">
+      {/* Slide indicator dots */}
+      {backgrounds.length > 1 && (
+        <div className="absolute bottom-8 left-1/2 -translate-x-1/2 flex gap-2 z-20">
+          {backgrounds.map((_, i) => (
+            <button
+              key={i}
+              onClick={() => setBgIndex(i)}
+              className={`h-1.5 rounded-full transition-all duration-500 ${
+                i === bgIndex ? 'w-8 bg-[#F5A623]' : 'w-2 bg-white/30 hover:bg-white/50'
+              }`}
+              aria-label={`Background ${i + 1}`}
+            />
+          ))}
+        </div>
+      )}
+
+      {/* Floating orbs */}
+      <motion.div
+        animate={{ y: [0, -30, 0], rotate: [0, 10, 0] }}
+        transition={{ duration: 8, repeat: Infinity, ease: 'easeInOut' }}
+        className="absolute top-1/3 left-8 hidden lg:flex items-center justify-center w-16 h-16 border border-[#F5A623]/30 rounded-2xl rotate-12 text-[#F5A623]/40 font-bold text-xl z-10"
+      >₿</motion.div>
+      <motion.div
+        animate={{ y: [0, 25, 0], rotate: [0, -8, 0] }}
+        transition={{ duration: 7, repeat: Infinity, ease: 'easeInOut', delay: 1 }}
+        className="absolute bottom-1/3 right-8 hidden lg:flex items-center justify-center w-20 h-20 border border-[#00C2FF]/30 rounded-full text-[#00C2FF]/40 font-bold text-sm z-10"
+      >AI</motion.div>
+
+      {/* ── Main content ── */}
+      <div className="max-w-7xl mx-auto text-center relative z-10 w-full">
         {/* Badge */}
         <motion.div
           initial={{ opacity: 0, scale: 0.9 }}
           animate={{ opacity: 1, scale: 1 }}
           transition={{ duration: 0.6 }}
-          className="inline-flex items-center gap-2 px-4 py-2 bg-[#F5A623]/10 border border-[#F5A623]/30 rounded-full mb-8"
+          className="inline-flex items-center gap-2 px-4 py-2 bg-[#F5A623]/10 border border-[#F5A623]/30 rounded-full mb-10"
         >
           <span className="w-2 h-2 rounded-full bg-[#F5A623] animate-pulse" />
-          <span className="text-xs font-bold uppercase tracking-widest text-[#F5A623]">
+          <span className="text-xs font-semibold uppercase tracking-widest text-[#F5A623]">
             Start Small, Grow Smart — Digital Assets for Every African
           </span>
         </motion.div>
 
         {/* Headline */}
-        <motion.h1
-          initial={{ opacity: 0, y: 40 }}
-          animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.2 }}
-          className="text-6xl md:text-9xl font-black tracking-tighter text-black dark:text-white leading-[0.85] mb-8"
-        >
-          BUILDING <br />
-          <span className="text-[#F5A623]">DIGITAL</span> <br />
-          <span className="text-[#00C2FF]">WEALTH.</span>
-        </motion.h1>
+        <div className="overflow-hidden mb-4">
+          <motion.div
+            initial={{ opacity: 0, y: 60 }}
+            animate={{ opacity: 1, y: 0 }}
+            transition={{ duration: 0.9, delay: 0.2, ease: [0.16, 1, 0.3, 1] }}
+            className="flex flex-wrap items-baseline justify-center gap-x-4 gap-y-2"
+          >
+            <span className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight text-white leading-none">
+              BUILDING
+            </span>
+            <span className="relative text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight leading-none inline-block" style={{ minWidth: '5ch' }}>
+              <AnimatePresence mode="wait">
+                <motion.span
+                  key={wordIndex}
+                  initial={{ y: 40, opacity: 0 }}
+                  animate={{ y: 0, opacity: 1 }}
+                  exit={{ y: -40, opacity: 0 }}
+                  transition={{ duration: 0.4, ease: [0.16, 1, 0.3, 1] }}
+                  className="block text-[#F5A623]"
+                >
+                  {ROTATING_WORDS[wordIndex]}
+                </motion.span>
+              </AnimatePresence>
+            </span>
+            <span className="text-4xl md:text-6xl lg:text-7xl font-bold tracking-tight text-[#00C2FF] leading-none">
+              WEALTH.
+            </span>
+          </motion.div>
+        </div>
 
         {/* Subheadline */}
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.4 }}
-          className="max-w-2xl mx-auto text-lg md:text-xl text-zinc-600 dark:text-zinc-400 mb-6 leading-relaxed"
+          transition={{ duration: 0.8, delay: 0.5 }}
+          className="max-w-2xl mx-auto text-lg text-white/70 mb-3 leading-relaxed"
         >
           One company. Multiple ventures. One mission.
         </motion.p>
         <motion.p
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.5 }}
-          className="max-w-xl mx-auto text-base text-zinc-500 dark:text-zinc-500 mb-12"
+          transition={{ duration: 0.8, delay: 0.6 }}
+          className="max-w-xl mx-auto text-base text-white/50 mb-12"
         >
-          From crypto education to AI automation, e-commerce, branding, and automotive services — built for Africa.
+          From crypto education to AI automation, e-commerce, branding, and automotive — built for Africa.
         </motion.p>
 
         {/* CTAs */}
         <motion.div
           initial={{ opacity: 0, y: 20 }}
           animate={{ opacity: 1, y: 0 }}
-          transition={{ duration: 0.8, delay: 0.6 }}
+          transition={{ duration: 0.8, delay: 0.7 }}
           className="flex flex-col md:flex-row items-center justify-center gap-4"
         >
           <a
             href="#ventures"
-            className="w-full md:w-auto px-8 py-4 bg-[#F5A623] text-[#0A0F1E] font-black text-lg rounded-2xl hover:bg-[#F5A623]/80 hover:scale-105 transition-all flex items-center justify-center gap-2"
+            className="w-full md:w-auto px-8 py-4 bg-[#F5A623] text-[#0A0F1E] font-semibold text-base rounded-2xl hover:bg-[#F5A623]/80 hover:scale-105 transition-all flex items-center justify-center gap-2 shadow-xl shadow-[#F5A623]/20"
           >
             EXPLORE OUR VENTURES <ArrowRight size={20} />
           </a>
           <a
             href="#contact"
-            className="w-full md:w-auto px-8 py-4 bg-black/5 dark:bg-white/5 border border-black/10 dark:border-white/10 text-black dark:text-white font-black text-lg rounded-2xl hover:bg-[#00C2FF]/10 hover:border-[#00C2FF]/30 transition-all"
+            className="w-full md:w-auto px-8 py-4 bg-white/5 border border-white/15 text-white font-semibold text-base rounded-2xl hover:bg-[#00C2FF]/10 hover:border-[#00C2FF]/30 transition-all"
           >
             GET STARTED
           </a>
         </motion.div>
 
-        {/* Venture pill tags */}
+        {/* Venture pills */}
         <motion.div
           initial={{ opacity: 0 }}
           animate={{ opacity: 1 }}
           transition={{ delay: 1 }}
           className="flex flex-wrap items-center justify-center gap-3 mt-16"
         >
-          {['TechAfrik', 'Dobuygoods', 'SignupGhana', 'Biskaken', 'ResearchClaw'].map((v, i) => (
-            <motion.span
-              key={v}
+          {[
+            { name: 'TechAfrik', color: '#F5A623', id: 'techafrik' },
+            { name: 'Dobuygoods', color: '#00C2FF', id: 'dobuygoods' },
+            { name: 'SignupGhana', color: '#A855F7', id: 'signupghana' },
+            { name: 'Biskaken', color: '#EF4444', id: 'biskaken' },
+            { name: 'ResearchClaw', color: '#10B981', id: 'researchclaw' },
+          ].map((v, i) => (
+            <motion.a
+              key={v.name}
+              href={`/venture/${v.id}`}
               initial={{ opacity: 0, y: 10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: 1 + i * 0.1 }}
-              className="px-4 py-2 rounded-full border border-white/10 dark:border-white/10 bg-white/5 dark:bg-white/5 text-xs font-bold text-zinc-500 dark:text-zinc-500 uppercase tracking-widest"
+              className="px-4 py-2 rounded-full border bg-white/5 text-xs font-medium uppercase tracking-widest transition-all hover:scale-105 hover:bg-white/10"
+              style={{ color: v.color, borderColor: `${v.color}30` }}
             >
-              {v}
-            </motion.span>
+              {v.name}
+            </motion.a>
           ))}
         </motion.div>
       </div>
 
-      {/* Floating accent elements */}
-      <motion.div
-        animate={{ y: [0, -20, 0] }}
-        transition={{ duration: 5, repeat: Infinity, ease: 'easeInOut' }}
-        className="absolute top-1/3 left-10 hidden lg:block"
-      >
-        <div className="w-20 h-20 border border-[#F5A623]/20 rounded-2xl rotate-12 flex items-center justify-center text-[#F5A623]/20 font-black text-2xl">
-          ₿
-        </div>
-      </motion.div>
-      <motion.div
-        animate={{ y: [0, 20, 0] }}
-        transition={{ duration: 6, repeat: Infinity, ease: 'easeInOut' }}
-        className="absolute bottom-1/4 right-10 hidden lg:block"
-      >
-        <div className="w-24 h-24 border border-[#00C2FF]/20 rounded-full -rotate-12 flex items-center justify-center text-[#00C2FF]/20 font-black text-xl">
-          AI
-        </div>
-      </motion.div>
+      {/* CSS for slow zoom keyframe */}
+      <style>{`
+        @keyframes heroZoom {
+          from { transform: scale(1); }
+          to   { transform: scale(1.08); }
+        }
+      `}</style>
     </section>
   );
 }

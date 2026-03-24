@@ -13,6 +13,8 @@ import BlogGenerator from './components/BlogGenerator';
 import About from './components/FeaturedWork';
 import ServicePage from './components/ServicePage';
 import AdminDashboard from './components/AdminDashboard';
+import AiChat from './components/AiChat';
+import ContactForm from './components/ContactForm';
 import { BlogPost, Service } from './types';
 import { SERVICES as INITIAL_SERVICES } from './constants';
 import { motion, AnimatePresence } from 'motion/react';
@@ -122,18 +124,25 @@ export default function App() {
     fetchData();
   }, []);
 
-  const handlePostGenerated = async (newPost: BlogPost) => {
+  const handleAddPost = async (newPost: BlogPost) => {
     try {
       const res = await fetch('/api/posts', {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
         body: JSON.stringify(newPost)
       });
-      if (res.ok) {
-        setPosts([newPost, ...posts]);
-      }
+      if (res.ok) setPosts(prev => [newPost, ...prev]);
     } catch (err) {
       console.error('Failed to save post:', err);
+    }
+  };
+
+  const handleDeletePost = async (id: string) => {
+    try {
+      await fetch(`/api/posts/${id}`, { method: 'DELETE' });
+      setPosts(prev => prev.filter(p => p.id !== id));
+    } catch (err) {
+      console.error('Failed to delete post:', err);
     }
   };
 
@@ -219,7 +228,7 @@ export default function App() {
               className="bg-white dark:bg-[#0D1426] border border-black/10 dark:border-white/10 rounded-3xl p-8 w-full max-w-md shadow-2xl"
             >
               <div className="flex items-center justify-between mb-6">
-                <h3 className="text-2xl font-black tracking-tighter text-black dark:text-white">ADMIN <span className="text-[#F5A623] italic">ACCESS</span></h3>
+                <h3 className="text-2xl font-bold tracking-tight text-black dark:text-white">ADMIN <span className="text-[#F5A623] italic">ACCESS</span></h3>
                 <button onClick={() => setShowAdminPrompt(false)} className="p-2 rounded-xl hover:bg-black/5 dark:hover:bg-white/5 transition-colors">
                   <X size={20} className="text-zinc-500" />
                 </button>
@@ -247,7 +256,7 @@ export default function App() {
               )}
               <button
                 onClick={handleAdminLogin}
-                className="w-full bg-[#F5A623] text-[#0A0F1E] font-black py-4 rounded-xl hover:bg-[#F5A623]/80 transition-all shadow-lg shadow-[#F5A623]/20"
+                className="w-full bg-[#F5A623] text-[#0A0F1E] font-semibold py-4 rounded-xl hover:bg-[#F5A623]/80 transition-all shadow-lg shadow-[#F5A623]/20"
               >
                 UNLOCK ADMIN
               </button>
@@ -278,7 +287,7 @@ export default function App() {
                       initial={{ opacity: 0 }}
                       whileInView={{ opacity: 1 }}
                       viewport={{ once: true }}
-                      className="text-xs font-bold uppercase tracking-widest text-[#00C2FF] mb-4"
+                      className="text-xs font-semibold uppercase tracking-widest text-[#00C2FF] mb-4"
                     >
                       Why Us
                     </motion.div>
@@ -286,7 +295,7 @@ export default function App() {
                       initial={{ opacity: 0, y: 20 }}
                       whileInView={{ opacity: 1, y: 0 }}
                       viewport={{ once: true }}
-                      className="text-4xl md:text-6xl font-black text-black dark:text-white tracking-tighter"
+                      className="text-3xl md:text-5xl font-bold text-black dark:text-white tracking-tight"
                     >
                       WHY CHOOSE <span className="text-[#F5A623] italic">RIPPLE & MORE?</span>
                     </motion.h2>
@@ -302,7 +311,7 @@ export default function App() {
                         className="p-8 rounded-3xl border border-black/5 dark:border-white/5 bg-white dark:bg-white/[0.03] hover:border-[#F5A623]/30 transition-all group"
                       >
                         <span className="text-4xl mb-4 block">{item.icon}</span>
-                        <h3 className="text-xl font-black text-black dark:text-white mb-3 group-hover:text-[#F5A623] transition-colors">{item.title}</h3>
+                        <h3 className="text-lg font-semibold text-black dark:text-white mb-3 group-hover:text-[#F5A623] transition-colors">{item.title}</h3>
                         <p className="text-zinc-600 dark:text-zinc-400 text-sm leading-relaxed">{item.desc}</p>
                       </motion.div>
                     ))}
@@ -326,15 +335,15 @@ export default function App() {
                         transition={{ delay: i * 0.1 }}
                         className="text-center"
                       >
-                        <p className="text-5xl md:text-6xl font-black text-[#0A0F1E]">{stat.value}</p>
-                        <p className="text-sm font-bold text-[#0A0F1E]/70 uppercase tracking-widest mt-2">{stat.label}</p>
+                        <p className="text-5xl font-bold text-[#0A0F1E]">{stat.value}</p>
+                        <p className="text-sm font-medium text-[#0A0F1E]/70 uppercase tracking-widest mt-2">{stat.label}</p>
                       </motion.div>
                     ))}
                   </div>
                 </div>
               </section>
 
-              {isAdmin && <BlogGenerator onPostGenerated={handlePostGenerated} />}
+              {isAdmin && <BlogGenerator onPostGenerated={handleAddPost} />}
 
               <Blog posts={posts} />
 
@@ -342,61 +351,95 @@ export default function App() {
                 <AdminDashboard
                   services={services}
                   onUpdateServices={updateServices}
+                  posts={posts}
+                  onAddPost={handleAddPost}
+                  onDeletePost={handleDeletePost}
                 />
               )}
 
-              {/* Final CTA */}
-              <section id="contact" className="py-32 px-6 bg-[#0A0F1E] dark:bg-[#0A0F1E] relative overflow-hidden">
+              {/* Contact Section */}
+              <section id="contact" className="py-24 px-6 bg-white dark:bg-[#0A0F1E] transition-colors duration-300 relative">
+                <div className="absolute top-0 left-0 right-0 h-px bg-gradient-to-r from-transparent via-[#F5A623]/30 to-transparent" />
                 <div className="absolute inset-0 pointer-events-none">
-                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[600px] h-[600px] bg-[#F5A623]/10 rounded-full blur-[160px]" />
+                  <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-[500px] h-[500px] bg-[#F5A623]/5 rounded-full blur-[120px]" />
                 </div>
-                <div className="max-w-7xl mx-auto text-center relative">
-                  <motion.div
-                    initial={{ opacity: 0 }}
-                    whileInView={{ opacity: 1 }}
-                    viewport={{ once: true }}
-                    className="text-xs font-bold uppercase tracking-widest text-[#F5A623] mb-6"
-                  >
-                    Ready to Start?
-                  </motion.div>
-                  <motion.h2
-                    initial={{ opacity: 0, y: 20 }}
-                    whileInView={{ opacity: 1, y: 0 }}
-                    viewport={{ once: true }}
-                    className="text-5xl md:text-8xl font-black text-white tracking-tighter mb-8 leading-none"
-                  >
-                    READY TO BUILD <br />
-                    <span className="text-[#F5A623] italic">DIGITAL WEALTH?</span>
-                  </motion.h2>
-                  <p className="text-zinc-400 text-xl mb-12 max-w-2xl mx-auto">
-                    Whether you're an individual, a business, or a partner — there's a place for you in the Ripple & More ecosystem.
-                  </p>
-                  <div className="flex flex-col sm:flex-row items-center justify-center gap-4">
-                    <a
-                      href="#ventures"
-                      className="px-10 py-5 bg-[#F5A623] text-[#0A0F1E] font-black text-lg rounded-2xl hover:bg-[#F5A623]/80 hover:scale-105 transition-all shadow-xl shadow-[#F5A623]/20"
+
+                <div className="max-w-7xl mx-auto relative">
+                  <div className="grid grid-cols-1 lg:grid-cols-2 gap-16 items-start">
+
+                    {/* Left — copy */}
+                    <div>
+                      <motion.p
+                        initial={{ opacity: 0, y: 10 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        className="text-xs font-semibold uppercase tracking-widest text-[#F5A623] mb-4"
+                      >
+                        Get in Touch
+                      </motion.p>
+                      <motion.h2
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.1 }}
+                        className="text-3xl md:text-5xl font-bold tracking-tight text-black dark:text-white leading-tight mb-6"
+                      >
+                        Let's Build <br />
+                        <span className="text-[#F5A623]">Something Together.</span>
+                      </motion.h2>
+                      <motion.p
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.2 }}
+                        className="text-zinc-600 dark:text-zinc-400 text-base leading-relaxed mb-10 max-w-md"
+                      >
+                        Whether you're an individual, a business, or a partner — there's a place for you in the Ripple & More ecosystem.
+                      </motion.p>
+
+                      {/* Contact details */}
+                      <motion.div
+                        initial={{ opacity: 0, y: 20 }}
+                        whileInView={{ opacity: 1, y: 0 }}
+                        viewport={{ once: true }}
+                        transition={{ delay: 0.3 }}
+                        className="space-y-4"
+                      >
+                        {[
+                          { label: 'Email', value: 'info@rpnmore.com', href: 'mailto:info@rpnmore.com' },
+                          { label: 'Call / WhatsApp', value: '+233 598 919 014', href: 'https://wa.me/233598919014' },
+                          { label: 'Channel', value: 'Join our WhatsApp Channel', href: 'https://chat.whatsapp.com/B99AHfBj97o7BtqmtEUQR2?mode=gi_t' },
+                          { label: 'Location', value: 'Ghana · Dubai, UAE', href: null },
+                        ].map(item => (
+                          <div key={item.label} className="flex items-center gap-4">
+                            <span className="text-xs font-semibold uppercase tracking-widest text-zinc-500 w-20">{item.label}</span>
+                            {item.href ? (
+                              <a href={item.href} className="text-sm font-medium text-black dark:text-white hover:text-[#F5A623] transition-colors">{item.value}</a>
+                            ) : (
+                              <span className="text-sm font-medium text-black dark:text-white">{item.value}</span>
+                            )}
+                          </div>
+                        ))}
+                      </motion.div>
+                    </div>
+
+                    {/* Right — form */}
+                    <motion.div
+                      initial={{ opacity: 0, x: 20 }}
+                      whileInView={{ opacity: 1, x: 0 }}
+                      viewport={{ once: true }}
+                      transition={{ delay: 0.2 }}
+                      className="bg-zinc-50 dark:bg-white/[0.03] border border-black/5 dark:border-white/5 rounded-3xl p-8 md:p-10"
                     >
-                      Explore Our Ventures
-                    </a>
-                    <a
-                      href="#blog"
-                      className="px-10 py-5 border border-white/20 text-white font-black text-lg rounded-2xl hover:border-[#00C2FF]/50 hover:bg-[#00C2FF]/10 transition-all"
-                    >
-                      Read the Blog
-                    </a>
-                    <a
-                      href="mailto:info@rpnmore.com"
-                      className="px-10 py-5 border border-white/20 text-white font-black text-lg rounded-2xl hover:border-[#F5A623]/50 hover:bg-[#F5A623]/10 transition-all"
-                    >
-                      Contact Us
-                    </a>
+                      <ContactForm />
+                    </motion.div>
                   </div>
                 </div>
               </section>
             </main>
           } />
 
-          <Route path="/service/:id" element={<ServicePage services={services} />} />
+          <Route path="/venture/:id" element={<ServicePage services={services} />} />
         </Routes>
 
         {/* Footer */}
@@ -409,7 +452,7 @@ export default function App() {
                   <div className="w-8 h-8 bg-[#F5A623] rounded flex items-center justify-center">
                     <span className="text-[#0A0F1E] font-black">R</span>
                   </div>
-                  <span className="text-white font-black text-xl tracking-tighter">Ripple & More</span>
+                  <span className="text-white font-bold text-xl tracking-tight">Ripple & More</span>
                 </div>
                 <p className="text-zinc-500 text-sm mb-2">Founded in Ghana · Operating from Dubai, UAE</p>
                 <p className="text-[#F5A623] text-xs font-bold uppercase tracking-widest italic">
@@ -419,13 +462,13 @@ export default function App() {
 
               {/* Venture Links */}
               <div>
-                <p className="text-xs font-bold uppercase tracking-widest text-[#F5A623] mb-4">Our Ventures</p>
+                <p className="text-xs font-semibold uppercase tracking-widest text-[#F5A623] mb-4">Our Ventures</p>
                 <div className="flex flex-col gap-2">
                   {[
                     { name: 'TechAfrik', href: 'https://techafrik.rpnmore.com' },
                     { name: 'Dobuygoods', href: 'https://dobuygoods.rpnmore.com' },
                     { name: 'SignupGhana', href: 'https://signupghana.rpnmore.com' },
-                    { name: 'Biskaken', href: 'https://biskaken.rpnmore.com' },
+                    { name: 'Biskaken', href: 'https://biskakenauto.rpnmore.com' },
                     { name: 'ResearchClaw', href: 'https://researchclaw.rpnmore.com' },
                   ].map(v => (
                     <a key={v.name} href={v.href} target="_blank" rel="noopener noreferrer"
@@ -438,7 +481,7 @@ export default function App() {
 
               {/* Quick Links */}
               <div>
-                <p className="text-xs font-bold uppercase tracking-widest text-[#F5A623] mb-4">Quick Links</p>
+                <p className="text-xs font-semibold uppercase tracking-widest text-[#F5A623] mb-4">Quick Links</p>
                 <div className="flex flex-col gap-2">
                   {['Home', 'About', 'Ventures', 'Blog', 'Contact'].map(link => (
                     <a key={link} href={`#${link.toLowerCase()}`}
@@ -451,7 +494,7 @@ export default function App() {
 
               {/* Social */}
               <div>
-                <p className="text-xs font-bold uppercase tracking-widest text-[#F5A623] mb-4">Follow Us</p>
+                <p className="text-xs font-semibold uppercase tracking-widest text-[#F5A623] mb-4">Follow Us</p>
                 <div className="flex flex-col gap-2">
                   {[
                     { name: 'Twitter / X', href: 'https://twitter.com/rpnmore' },
@@ -479,6 +522,7 @@ export default function App() {
             </div>
           </div>
         </footer>
+        <AiChat />
       </div>
     </Router>
   );

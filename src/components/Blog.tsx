@@ -26,7 +26,7 @@ export default function Blog({ posts }: BlogProps) {
               initial={{ opacity: 0, x: -20 }}
               whileInView={{ opacity: 1, x: 0 }}
               viewport={{ once: true }}
-              className="text-xs font-bold uppercase tracking-widest text-[#00C2FF] mb-4"
+              className="text-xs font-semibold uppercase tracking-widest text-[#00C2FF] mb-4"
             >
               Education Hub
             </motion.div>
@@ -35,7 +35,7 @@ export default function Blog({ posts }: BlogProps) {
               whileInView={{ opacity: 1, y: 0 }}
               viewport={{ once: true }}
               transition={{ delay: 0.1 }}
-              className="text-4xl md:text-6xl font-black text-black dark:text-white tracking-tighter leading-none"
+              className="text-3xl md:text-5xl font-bold text-black dark:text-white tracking-tight leading-none"
             >
               LEARN. GROW. <br />
               <span className="text-[#F5A623] italic">BUILD WEALTH.</span>
@@ -62,7 +62,7 @@ export default function Blog({ posts }: BlogProps) {
           {['All Posts', 'Digital Assets', 'AI & Automation', 'Mobile Money', 'Africa Tech', 'Portfolio Building'].map(cat => (
             <button
               key={cat}
-              className={`px-4 py-2 rounded-full text-xs font-bold uppercase tracking-widest transition-colors border ${
+              className={`px-4 py-2 rounded-full text-xs font-medium uppercase tracking-widest transition-colors border ${
                 cat === 'All Posts'
                   ? 'bg-[#F5A623] text-[#0A0F1E] border-[#F5A623]'
                   : 'border-black/10 dark:border-white/10 text-zinc-600 dark:text-zinc-400 hover:border-[#F5A623]/50 hover:text-[#F5A623]'
@@ -97,7 +97,7 @@ export default function Blog({ posts }: BlogProps) {
                   {post.tags.slice(0, 2).map(tag => (
                     <span
                       key={tag}
-                      className={`px-3 py-1 rounded-full text-[10px] font-bold uppercase tracking-widest backdrop-blur-md ${CATEGORY_COLORS[tag] || 'bg-black/60 text-white'}`}
+                      className={`px-3 py-1 rounded-full text-[10px] font-medium uppercase tracking-widest backdrop-blur-md ${CATEGORY_COLORS[tag] || 'bg-black/60 text-white'}`}
                     >
                       {tag}
                     </span>
@@ -121,7 +121,7 @@ export default function Blog({ posts }: BlogProps) {
                 <p className="text-zinc-600 dark:text-zinc-400 text-sm leading-relaxed mb-8 line-clamp-3">
                   {post.excerpt}
                 </p>
-                <button className="flex items-center gap-2 text-sm font-bold text-black dark:text-white group-hover:gap-4 transition-all">
+                <button className="flex items-center gap-2 text-sm font-semibold text-black dark:text-white group-hover:gap-4 transition-all">
                   READ MORE <ArrowRight size={16} className="text-[#F5A623]" />
                 </button>
               </div>
@@ -136,7 +136,7 @@ export default function Blog({ posts }: BlogProps) {
           viewport={{ once: true }}
           className="mt-20 rounded-3xl border border-[#F5A623]/20 bg-[#F5A623]/5 p-10 md:p-16 text-center"
         >
-          <h3 className="text-3xl md:text-5xl font-black text-black dark:text-white tracking-tighter mb-3">
+          <h3 className="text-2xl md:text-4xl font-bold text-black dark:text-white tracking-tight mb-3">
             Get Weekly Insights — <span className="text-[#F5A623]">Free</span>
           </h3>
           <p className="text-zinc-600 dark:text-zinc-400 mb-8 max-w-md mx-auto">
@@ -148,7 +148,7 @@ export default function Blog({ posts }: BlogProps) {
               placeholder="Enter your email address"
               className="flex-1 px-5 py-4 rounded-xl bg-white dark:bg-white/5 border border-black/10 dark:border-white/10 text-black dark:text-white placeholder:text-zinc-500 focus:outline-none focus:ring-2 focus:ring-[#F5A623]"
             />
-            <button className="px-6 py-4 bg-[#F5A623] text-[#0A0F1E] font-black rounded-xl hover:bg-[#F5A623]/80 transition-colors whitespace-nowrap">
+            <button className="px-6 py-4 bg-[#F5A623] text-[#0A0F1E] font-semibold rounded-xl hover:bg-[#F5A623]/80 transition-colors whitespace-nowrap">
               Subscribe Free →
             </button>
           </div>

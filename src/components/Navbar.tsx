@@ -1,6 +1,7 @@
 import { motion, AnimatePresence } from 'motion/react';
 import { Menu, X, ChevronDown } from 'lucide-react';
 import { useState } from 'react';
+import { useNavigate } from 'react-router-dom';
 import { cn } from '../lib/utils';
 
 interface NavbarProps {
@@ -12,13 +13,14 @@ const VENTURES = [
   { name: 'TechAfrik', href: 'https://techafrik.rpnmore.com', tag: 'AI & Blockchain Media' },
   { name: 'Dobuygoods', href: 'https://dobuygoods.rpnmore.com', tag: 'Crypto Commerce' },
   { name: 'SignupGhana', href: 'https://signupghana.rpnmore.com', tag: 'Branding & Signage' },
-  { name: 'Biskaken', href: 'https://biskaken.rpnmore.com', tag: 'Auto Services' },
+  { name: 'Biskaken', href: 'https://biskakenauto.rpnmore.com', tag: 'Auto Services' },
   { name: 'ResearchClaw', href: 'https://researchclaw.rpnmore.com', tag: 'AI Automation' },
 ];
 
 export default function Navbar({ isDark }: NavbarProps) {
   const [isOpen, setIsOpen] = useState(false);
   const [venturesOpen, setVenturesOpen] = useState(false);
+  const navigate = useNavigate();
 
   return (
     <nav className={cn(
@@ -28,7 +30,8 @@ export default function Navbar({ isDark }: NavbarProps) {
       <div className="max-w-7xl mx-auto px-6 h-20 flex items-center justify-between">
         {/* Logo */}
         <motion.a
-          href="#"
+          href="/"
+          onClick={(e) => { e.preventDefault(); navigate('/'); window.scrollTo({ top: 0, behavior: 'smooth' }); }}
           initial={{ opacity: 0, x: -20 }}
           animate={{ opacity: 1, x: 0 }}
           className="flex items-center gap-2"
@@ -38,7 +41,7 @@ export default function Navbar({ isDark }: NavbarProps) {
           </div>
           <div className="leading-tight">
             <span className={cn(
-              "text-lg font-black tracking-tight block transition-colors",
+              "text-lg font-bold tracking-tight block transition-colors",
               isDark ? "text-white" : "text-[#0A0F1E]"
             )}>Ripple & More</span>
             <span className="text-[10px] font-medium tracking-widest text-[#F5A623] uppercase">Limited</span>
@@ -50,7 +53,8 @@ export default function Navbar({ isDark }: NavbarProps) {
           {['Home', 'About', 'Blog', 'Contact'].map((item, i) => (
             <motion.a
               key={item}
-              href={`#${item.toLowerCase()}`}
+              href={item === 'Home' ? '/' : `#${item.toLowerCase()}`}
+              onClick={item === 'Home' ? (e: React.MouseEvent) => { e.preventDefault(); navigate('/'); window.scrollTo({ top: 0, behavior: 'smooth' }); } : undefined}
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.08 }}
@@ -100,7 +104,7 @@ export default function Navbar({ isDark }: NavbarProps) {
                           isDark ? "hover:bg-white/5" : "hover:bg-black/5"
                         )}
                       >
-                        <span className={cn("text-sm font-bold group-hover:text-[#F5A623] transition-colors", isDark ? "text-white" : "text-[#0A0F1E]")}>{v.name}</span>
+                        <span className={cn("text-sm font-semibold group-hover:text-[#F5A623] transition-colors", isDark ? "text-white" : "text-[#0A0F1E]")}>{v.name}</span>
                         <span className="text-[11px] text-zinc-500">{v.tag}</span>
                       </a>
                     ))}
@@ -114,7 +118,7 @@ export default function Navbar({ isDark }: NavbarProps) {
             href="#contact"
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
-            className="px-5 py-2 text-sm font-bold rounded-full bg-[#F5A623] text-[#0A0F1E] hover:bg-[#F5A623]/80 transition-colors"
+            className="px-5 py-2 text-sm font-semibold rounded-full bg-[#F5A623] text-[#0A0F1E] hover:bg-[#F5A623]/80 transition-colors"
           >
             Get Started →
           </motion.a>
@@ -144,15 +148,18 @@ export default function Navbar({ isDark }: NavbarProps) {
             {['Home', 'About', 'Blog', 'Contact'].map(item => (
               <a
                 key={item}
-                href={`#${item.toLowerCase()}`}
+                href={item === 'Home' ? '/' : `#${item.toLowerCase()}`}
                 className={cn("text-xl font-medium", isDark ? "text-white" : "text-[#0A0F1E]")}
-                onClick={() => setIsOpen(false)}
+                onClick={(e) => {
+                  setIsOpen(false);
+                  if (item === 'Home') { e.preventDefault(); navigate('/'); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+                }}
               >
                 {item}
               </a>
             ))}
             <div>
-              <p className="text-xs font-bold uppercase tracking-widest text-[#F5A623] mb-3">Our Ventures</p>
+              <p className="text-xs font-semibold uppercase tracking-widest text-[#F5A623] mb-3">Our Ventures</p>
               {VENTURES.map(v => (
                 <a
                   key={v.name}
@@ -169,7 +176,7 @@ export default function Navbar({ isDark }: NavbarProps) {
             <a
               href="#contact"
               onClick={() => setIsOpen(false)}
-              className="w-full py-4 font-bold rounded-xl text-center block bg-[#F5A623] text-[#0A0F1E]"
+              className="w-full py-4 font-semibold rounded-xl text-center block bg-[#F5A623] text-[#0A0F1E]"
             >
               Get Started →
             </a>
