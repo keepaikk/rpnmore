@@ -68,7 +68,7 @@ const WHY_ITEMS = [
   { icon: '🌍', title: 'Africa-Focused', desc: 'We understand African markets, mobile money, and the unique opportunities across the continent.' },
   { icon: '🔗', title: 'Crypto-Native', desc: 'From payments to education — digital assets are built into everything we do.' },
   { icon: '🏗️', title: 'Multi-Venture', desc: 'One parent company. Multiple focused ventures. Each solving a specific problem for a specific market.' },
-  { icon: '🇬🇭', title: 'Ghanaian Roots, Dubai Operations', desc: 'Born in Ghana. Built in Dubai. Serving Africa and the GCC.' },
+  { icon: '🇬🇭', title: 'Ghanaian Roots, Pan-African Vision', desc: 'Born in Ghana. Built for Africa. Serving the Continent.' },
 ];
 
 const STATS = [
@@ -409,7 +409,7 @@ export default function App() {
                           { label: 'Email', value: 'info@rpnmore.com', href: 'mailto:info@rpnmore.com' },
                           { label: 'Call / WhatsApp', value: '+233 598 919 014', href: 'https://wa.me/233598919014' },
                           { label: 'Channel', value: 'Join our WhatsApp Channel', href: 'https://chat.whatsapp.com/B99AHfBj97o7BtqmtEUQR2?mode=gi_t' },
-                          { label: 'Location', value: 'Ghana · Dubai, UAE', href: null },
+                          { label: 'Location', value: 'Ghana · Africa', href: null },
                         ].map(item => (
                           <div key={item.label} className="flex items-center gap-4">
                             <span className="text-xs font-semibold uppercase tracking-widest text-zinc-500 w-20">{item.label}</span>
@@ -454,7 +454,7 @@ export default function App() {
                   </div>
                   <span className="text-white font-bold text-xl tracking-tight">Ripple & More</span>
                 </div>
-                <p className="text-zinc-500 text-sm mb-2">Founded in Ghana · Operating from Dubai, UAE</p>
+                <p className="text-zinc-500 text-sm mb-2">Founded in Ghana · Built for Africa</p>
                 <p className="text-[#F5A623] text-xs font-bold uppercase tracking-widest italic">
                   "Start Small, Grow Smart — Digital Assets for Every African"
                 </p>

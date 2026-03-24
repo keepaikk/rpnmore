@@ -36,7 +36,7 @@ export default function About() {
               transition={{ delay: 0.2 }}
               className="text-zinc-600 dark:text-zinc-400 text-base font-normal leading-relaxed mb-6"
             >
-              Ripple & More Limited is a digital asset and technology company founded in Ghana and operating from Dubai — building tools, platforms, and services that empower Africans to participate in the digital economy.
+              Ripple & More Limited is a digital asset and technology company founded in Ghana, operating across Africa — building tools, platforms, and services that empower Africans to participate in the digital economy.
             </motion.p>
             <motion.p
               initial={{ opacity: 0, y: 20 }}
@@ -58,7 +58,7 @@ export default function About() {
             >
               {[
                 { flag: '🇬🇭', label: 'Founded in Ghana' },
-                { flag: '🇦🇪', label: 'Operating from Dubai' },
+                { flag: '🌍', label: 'Built for Africa' },
                 { flag: '🌍', label: 'Built for Africa' },
               ].map(({ flag, label }) => (
                 <div
