@@ -1,0 +1,12 @@
+{
+  "name": "rpnmore-website",
+  "type": "application",
+  "buildPath": ".",
+  "dockerfile": "Dockerfile.dokploy",
+  "port": 3000,
+  "env": {
+    "NODE_ENV": "production",
+    "PORT": "3000",
+    "HOST": "0.0.0.0"
+  }
+}
