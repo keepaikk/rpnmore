@@ -8,6 +8,7 @@ import { BrowserRouter as Router, Routes, Route, useLocation } from 'react-route
 import Navbar from './components/Navbar';
 import Hero from './components/Hero';
 import Services from './components/Services';
+import BooksGrid from './components/BooksGrid';
 import Blog from './components/Blog';
 import BlogGenerator from './components/BlogGenerator';
 import About from './components/FeaturedWork';
@@ -15,8 +16,8 @@ import ServicePage from './components/ServicePage';
 import AdminDashboard from './components/AdminDashboard';
 import AiChat from './components/AiChat';
 import ContactForm from './components/ContactForm';
-import { BlogPost, Service } from './types';
-import { SERVICES as INITIAL_SERVICES } from './constants';
+import { BlogPost, Service, Book } from './types';
+import { SERVICES as INITIAL_SERVICES, BOOKS as INITIAL_BOOKS } from './constants';
 import { motion, AnimatePresence } from 'motion/react';
 import { Lock, Unlock, X, Eye, EyeOff } from 'lucide-react';
 import { cn } from './lib/utils';
@@ -277,6 +278,7 @@ export default function App() {
               <Hero />
               <About />
               <Services services={services} />
+              <BooksGrid books={INITIAL_BOOKS} />
 
               {/* Why Ripple & More */}
               <section className="py-32 px-6 bg-zinc-50 dark:bg-[#0D1426] transition-colors duration-300 relative">
@@ -439,6 +441,7 @@ export default function App() {
             </main>
           } />
 
+          <Route path="/books" element={<BooksGrid books={INITIAL_BOOKS} />} />
           <Route path="/venture/:id" element={<ServicePage services={services} />} />
         </Routes>
 

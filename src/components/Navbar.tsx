@@ -50,11 +50,11 @@ export default function Navbar({ isDark }: NavbarProps) {
 
         {/* Desktop Nav */}
         <div className="hidden md:flex items-center gap-8">
-          {['Home', 'About', 'Blog', 'Contact'].map((item, i) => (
+          {['Home', 'About', 'Blog', 'Books', 'Contact'].map((item, i) => (
             <motion.a
               key={item}
-              href={item === 'Home' ? '/' : `#${item.toLowerCase()}`}
-              onClick={item === 'Home' ? (e: React.MouseEvent) => { e.preventDefault(); navigate('/'); window.scrollTo({ top: 0, behavior: 'smooth' }); } : undefined}
+              href={item === 'Home' ? '/' : item === 'Books' ? '/books' : `#${item.toLowerCase()}`}
+              onClick={item === 'Home' ? (e: React.MouseEvent) => { e.preventDefault(); navigate('/'); window.scrollTo({ top: 0, behavior: 'smooth' }); } : item === 'Books' ? (e: React.MouseEvent) => { e.preventDefault(); navigate('/books'); window.scrollTo({ top: 0, behavior: 'smooth' }); } : undefined}
               initial={{ opacity: 0, y: -10 }}
               animate={{ opacity: 1, y: 0 }}
               transition={{ delay: i * 0.08 }}
@@ -145,14 +145,15 @@ export default function Navbar({ isDark }: NavbarProps) {
               isDark ? "bg-[#0A0F1E] border-white/10" : "bg-white border-black/10"
             )}
           >
-            {['Home', 'About', 'Blog', 'Contact'].map(item => (
+            {['Home', 'About', 'Blog', 'Books', 'Contact'].map(item => (
               <a
                 key={item}
-                href={item === 'Home' ? '/' : `#${item.toLowerCase()}`}
+                href={item === 'Home' ? '/' : item === 'Books' ? '/books' : `#${item.toLowerCase()}`}
                 className={cn("text-xl font-medium", isDark ? "text-white" : "text-[#0A0F1E]")}
                 onClick={(e) => {
                   setIsOpen(false);
                   if (item === 'Home') { e.preventDefault(); navigate('/'); window.scrollTo({ top: 0, behavior: 'smooth' }); }
+                  if (item === 'Books') { e.preventDefault(); navigate('/books'); window.scrollTo({ top: 0, behavior: 'smooth' }); }
                 }}
               >
                 {item}

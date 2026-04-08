@@ -24,3 +24,13 @@ export interface BlogPost {
   author: string;
   tags: string[];
 }
+
+export interface Book {
+  id: string;
+  title: string;
+  description: string;
+  price: string;
+  cover: string;
+  gumroadUrl: string;
+  category: string;
+}
