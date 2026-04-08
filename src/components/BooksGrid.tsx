@@ -71,7 +71,7 @@ export default function BooksGrid({ books }: BooksGridProps) {
               {/* Book Info */}
               <div className="p-6">
                 <span className="text-[10px] font-semibold uppercase tracking-widest text-[#F5A623] mb-2 block">
-                  {book.category}
+                  {book.category}{book.author && <span className="text-[10px] text-zinc-500 ml-2">by {book.author}</span>}
                 </span>
                 <h3 className="text-lg font-semibold text-black dark:text-white mb-2 leading-tight group-hover:text-[#F5A623] transition-colors">
                   {book.title}

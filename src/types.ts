@@ -21,7 +21,7 @@ export interface BlogPost {
   excerpt: string;
   imageUrl: string;
   date: string;
-  author: string;
+  author?: string;
   tags: string[];
 }
 
@@ -33,4 +33,5 @@ export interface Book {
   cover: string;
   gumroadUrl: string;
   category: string;
+  author?: string;
 }

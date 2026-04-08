@@ -2,6 +2,16 @@ import { Service, Book } from './types';
 
 export const BOOKS: Book[] = [
   {
+    id: 'darkness-light-hidden-states',
+    title: 'Darkness, Light, and the Hidden States of Reality',
+    description: "For centuries, humans have tried to understand light and darkness. We see light, feel warmth, and measure waves—but what about the absence of light? This book challenges everything you thought you knew about nothingness.",
+    price: '$7.99',
+    cover: '/images/book-darkness-nova.jpg',
+    gumroadUrl: 'https://store.rpnmore.com/l/darkness-light-hidden-states',
+    category: 'Philosophy & Physics',
+    author: 'Ayi-kwaku Odame',
+  },
+  {
     id: 'african-crypto-playbook',
     title: 'The African Crypto Playbook',
     description: "How Africans can build wealth with cryptocurrency in 2026. A practical, no-fluff guide to buying, holding, and growing digital assets from anywhere on the continent.",
