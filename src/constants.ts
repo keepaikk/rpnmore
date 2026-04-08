@@ -7,7 +7,7 @@ export const BOOKS: Book[] = [
     description: "How Africans can build wealth with cryptocurrency in 2026. A practical, no-fluff guide to buying, holding, and growing digital assets from anywhere on the continent.",
     price: '$9.99',
     cover: 'https://images.unsplash.com/photo-1620321023374-d1a68fbc720d?w=600&h=800&fit=crop',
-    gumroadUrl: 'https://rpnmore.gumroad.com/l/african-crypto-playbook',
+    gumroadUrl: 'https://store.rpnmore.com/l/african-crypto-playbook',
     category: 'Crypto & Digital Assets',
   },
   {
@@ -16,7 +16,7 @@ export const BOOKS: Book[] = [
     description: '5 AI tools that can 10x your business productivity. Real tools, real use cases, and step-by-step guides tailored for African businesses.',
     price: '$7.99',
     cover: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=600&h=800&fit=crop',
-    gumroadUrl: 'https://rpnmore.gumroad.com/l/ai-tools-african-entrepreneurs',
+    gumroadUrl: 'https://store.rpnmore.com/l/ai-tools-african-entrepreneurs',
     category: 'AI & Productivity',
   },
   {
@@ -25,7 +25,7 @@ export const BOOKS: Book[] = [
     description: "The Ripple & More philosophy in a book. Learn how to build digital wealth starting from zero — no thousands needed, just commitment and the right framework.",
     price: '$5.99',
     cover: 'https://images.unsplash.com/photo-1579621970563-ebec7560ff3e?w=600&h=800&fit=crop',
-    gumroadUrl: 'https://rpnmore.gumroad.com/l/start-small-grow-smart',
+    gumroadUrl: 'https://store.rpnmore.com/l/start-small-grow-smart',
     category: 'Philosophy & Finance',
   },
   {
@@ -34,7 +34,7 @@ export const BOOKS: Book[] = [
     description: "Everything you need to know to get started with blockchain, AI, and digital tech as an African. No prior knowledge required.",
     price: '$4.99',
     cover: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=600&h=800&fit=crop',
-    gumroadUrl: 'https://rpnmore.gumroad.com/l/techafrik-beginners-guide',
+    gumroadUrl: 'https://store.rpnmore.com/l/techafrik-beginners-guide',
     category: 'Tech Education',
   },
 ];
