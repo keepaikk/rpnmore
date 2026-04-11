@@ -2,6 +2,26 @@ import { Service, Book } from './types';
 
 export const BOOKS: Book[] = [
   {
+    id: 'familys-wrath-dragons-fire',
+    title: "Family's Wrath, Dragon's Fire",
+    description: 'A powerful dream about fire battles, earth obeying, and the strength of forgiveness. When a family attacks, the elements themselves choose sides.',
+    price: '$9.99',
+    cover: '/images/book-family-wrath.png',
+    gumroadUrl: 'https://mmtkeeper.gumroad.com/l/familys-wrath-dragons-fire',
+    category: 'Dreams & Spirituality',
+    author: 'Ayi-kwaku Odame',
+  },
+  {
+    id: 'naked-through-the-window',
+    title: 'Naked Through the Window',
+    description: 'A dream about escape, stripping identity, and finding your "bush" - the place where no one can catch you.',
+    price: '$7.99',
+    cover: '/images/book-naked-window.png',
+    gumroadUrl: 'https://mmtkeeper.gumroad.com/l/naked-through-the-window',
+    category: 'Dreams & Spirituality',
+    author: 'Ayi-kwaku Odame',
+  },
+  {
     id: 'darkness-light-hidden-states',
     title: 'Darkness, Light, and the Hidden States of Reality',
     description: "For centuries, humans have tried to understand light and darkness. We see light, feel warmth, and measure waves—but what about the absence of light? This book challenges everything you thought you knew about nothingness.",
