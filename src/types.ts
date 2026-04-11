@@ -12,6 +12,10 @@ export interface Service {
   features?: string[];
   tagline?: string;
   color?: string;
+  pricing?: {
+    setup?: string;
+    monthly?: string;
+  };
 }
 
 export interface BlogPost {
