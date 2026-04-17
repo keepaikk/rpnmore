@@ -1,5 +1,6 @@
 import { motion, AnimatePresence } from 'motion/react';
 import { ArrowRight } from 'lucide-react';
+import { ExchangeRateWidget } from './ExchangeRateWidget';
 import { useState, useEffect, useRef } from 'react';
 
 const ROTATING_WORDS = ['DIGITAL', 'CRYPTO', 'AI-DRIVEN', 'REAL'];
@@ -79,6 +80,17 @@ export default function Hero() {
         {/* Colour blobs */}
         <div className="absolute top-1/4 left-1/4 w-[500px] h-[500px] bg-[#F5A623]/10 rounded-full blur-[150px]" />
         <div className="absolute bottom-1/4 right-1/4 w-[500px] h-[500px] bg-[#00C2FF]/10 rounded-full blur-[150px]" />
+      </div>
+
+      {/* Exchange Rate Widget - Positioned top-right on desktop */}
+      <div className="absolute top-32 right-6 z-30 hidden xl:block">
+        <motion.div
+          initial={{ opacity: 0, x: 50 }}
+          animate={{ opacity: 1, x: 0 }}
+          transition={{ delay: 0.5, duration: 0.6 }}
+        >
+          <ExchangeRateWidget />
+        </motion.div>
       </div>
 
       {/* Slide indicator dots */}
@@ -172,6 +184,16 @@ export default function Hero() {
         >
           From crypto education to AI automation, e-commerce, branding, and automotive — built for Africa.
         </motion.p>
+
+        {/* Exchange Rate Widget - Mobile */}
+        <motion.div
+          initial={{ opacity: 0, y: 20 }}
+          animate={{ opacity: 1, y: 0 }}
+          transition={{ duration: 0.6, delay: 0.45 }}
+          className="xl:hidden mb-8"
+        >
+          <ExchangeRateWidget />
+        </motion.div>
 
         {/* CTAs */}
         <motion.div
