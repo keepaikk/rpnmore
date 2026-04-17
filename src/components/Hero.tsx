@@ -206,7 +206,7 @@ export default function Hero() {
             href="#ventures"
             className="w-full md:w-auto px-8 py-4 bg-[#F5A623] text-[#0A0F1E] font-semibold text-base rounded-2xl hover:bg-[#F5A623]/80 hover:scale-105 transition-all flex items-center justify-center gap-2 shadow-xl shadow-[#F5A623]/20"
           >
-            EXPLORE OUR VENTURES <ArrowRight size={20} />
+            VIEW LIVE PROJECTS <ArrowRight size={20} />
           </a>
           <a
             href="#contact"

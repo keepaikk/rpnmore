@@ -246,7 +246,7 @@ export default function ServicePage({ services }: ServicePageProps) {
           >
             <p className="text-xs font-semibold uppercase tracking-widest text-[#F5A623] mb-4">Ecosystem</p>
             <h2 className="text-3xl md:text-4xl font-bold tracking-tight text-white">
-              EXPLORE MORE <span className="text-[#F5A623] italic">VENTURES</span>
+              VIEW LIVE PROJECTS <span className="text-[#F5A623] italic">→</span>
             </h2>
           </motion.div>
 
