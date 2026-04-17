@@ -10,6 +10,7 @@ import Hero from './components/Hero';
 import Services from './components/Services';
 import BooksGrid from './components/BooksGrid';
 import Blog from './components/Blog';
+import BlogPostPage from './components/BlogPost';
 import BlogGenerator from './components/BlogGenerator';
 import About from './components/FeaturedWork';
 import ServicePage from './components/ServicePage';
@@ -17,44 +18,11 @@ import AdminDashboard from './components/AdminDashboard';
 import AiChat from './components/AiChat';
 import ContactForm from './components/ContactForm';
 import { BlogPost, Service, Book } from './types';
-import { SERVICES as INITIAL_SERVICES, BOOKS as INITIAL_BOOKS } from './constants';
+import { SERVICES as INITIAL_SERVICES, BOOKS as INITIAL_BOOKS, BLOG_POSTS } from './constants';
 import { motion, AnimatePresence } from 'motion/react';
 import { Lock, Unlock, X, Eye, EyeOff } from 'lucide-react';
 import { cn } from './lib/utils';
 
-
-const INITIAL_POSTS: BlogPost[] = [
-  {
-    id: '1',
-    title: 'What is Stellar (XLM) and Why It Matters for Africans',
-    excerpt: 'Stellar\'s fast, low-cost cross-border payment network is perfectly positioned for African financial markets. Here\'s why XLM could change how money moves across the continent.',
-    content: 'Full content here...',
-    imageUrl: 'https://picsum.photos/seed/stellar-xlm/1280/720',
-    date: 'March 10, 2026',
-    author: 'TechAfrik Team',
-    tags: ['Crypto', 'Digital Assets']
-  },
-  {
-    id: '2',
-    title: '5 AI Tools Every African Entrepreneur Should Use in 2026',
-    excerpt: 'From content automation to customer service — AI is leveling the playing field for African businesses. These are the tools making the biggest impact right now.',
-    content: 'Full content here...',
-    imageUrl: 'https://picsum.photos/seed/ai-tools-africa/1280/720',
-    date: 'March 8, 2026',
-    author: 'ResearchClaw AI',
-    tags: ['AI', 'Africa Tech']
-  },
-  {
-    id: '3',
-    title: 'Start Small, Grow Smart: The Ripple & More Philosophy',
-    excerpt: 'You don\'t need thousands of dollars to start building digital wealth. Our philosophy is simple: start with what you have, learn as you grow, and let compounding do the rest.',
-    content: 'Full content here...',
-    imageUrl: 'https://picsum.photos/seed/ripple-more-philosophy/1280/720',
-    date: 'March 5, 2026',
-    author: 'Ripple & More',
-    tags: ['Digital Assets', 'Africa Tech']
-  }
-];
 
 function ScrollToTop() {
   const { pathname } = useLocation();
@@ -95,7 +63,7 @@ export default function App() {
   const [showPassword, setShowPassword] = useState(false);
   const adminInputRef = useRef<HTMLInputElement>(null);
 
-  const [posts, setPosts] = useState<BlogPost[]>(INITIAL_POSTS);
+  const [posts, setPosts] = useState<BlogPost[]>(BLOG_POSTS);
   const [services, setServices] = useState<Service[]>(INITIAL_SERVICES);
   const [isLoading, setIsLoading] = useState(true);
 
@@ -443,6 +411,7 @@ export default function App() {
 
           <Route path="/books" element={<BooksGrid books={INITIAL_BOOKS} />} />
           <Route path="/venture/:id" element={<ServicePage services={services} />} />
+          <Route path="/blog/:slug" element={<BlogPostPage />} />
         </Routes>
 
         {/* Footer */}

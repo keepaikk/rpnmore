@@ -20,13 +20,21 @@ export interface Service {
 
 export interface BlogPost {
   id: string;
+  slug: string;
   title: string;
   content: string;
   excerpt: string;
   imageUrl: string;
   date: string;
   author?: string;
+  authorBio?: string;
+  authorImage?: string;
   tags: string[];
+  readTime?: string;
+  // SEO fields
+  metaTitle?: string;
+  metaDescription?: string;
+  keywords?: string[];
 }
 
 export interface Book {
