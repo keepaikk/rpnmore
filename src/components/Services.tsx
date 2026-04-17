@@ -8,6 +8,9 @@ interface ServicesProps {
 }
 
 const VENTURE_ICONS: Record<string, { emoji: string; color: string }> = {
+  'ai-customer-agent': { emoji: '🤖', color: '#10B981' },
+  'fast-web-apps': { emoji: '⚡', color: '#F5A623' },
+  'workflow-automation': { emoji: '🔄', color: '#6366F1' },
   techafrik:    { emoji: '📱', color: '#F5A623' },
   dobuygoods:   { emoji: '🛒', color: '#00C2FF' },
   signupghana:  { emoji: '🎨', color: '#A855F7' },
