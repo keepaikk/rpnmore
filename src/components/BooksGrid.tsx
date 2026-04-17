@@ -55,14 +55,23 @@ export default function BooksGrid({ books }: BooksGridProps) {
             >
               {/* Book Cover */}
               <div className="relative aspect-[3/4] overflow-hidden bg-gradient-to-br from-[#F5A623]/20 to-[#0A0F1E]/40">
-                <img
-                  src={book.cover}
-                  alt={book.title}
-                  className="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
-                  loading="lazy"
-                  width="400"
-                  height="533"
-                />
+                <picture>
+                  {/* WebP with responsive sizes */}
+                  <source
+                    type="image/webp"
+                    srcSet={book.coverWebpSrcset}
+                    sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
+                  />
+                  {/* Fallback to original */}
+                  <img
+                    src={book.cover}
+                    alt={book.title}
+                    className="w-full h-full object-cover opacity-90 group-hover:opacity-100 group-hover:scale-105 transition-all duration-500"
+                    loading="lazy"
+                    width="400"
+                    height="533"
+                  />
+                </picture>
                 {/* Overlay gradient */}
                 <div className="absolute inset-0 bg-gradient-to-t from-[#0A0F1E]/60 via-transparent to-transparent" />
                 {/* Price badge */}

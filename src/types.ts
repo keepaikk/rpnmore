@@ -35,6 +35,7 @@ export interface Book {
   description: string;
   price: string;
   cover: string;
+  coverWebpSrcset?: string; // WebP responsive srcset for better performance
   gumroadUrl: string;
   category: string;
   author?: string;
