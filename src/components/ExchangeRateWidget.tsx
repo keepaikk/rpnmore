@@ -1,27 +1,40 @@
 import { useEffect, useState } from 'react';
-import { TrendingUp, AlertTriangle, ArrowRight } from 'lucide-react';
-
-interface ExchangeRates {
-  bank: number;
-  mobile: number;
-  street: number;
-  rpnmore: number;
-}
+import { TrendingUp, AlertTriangle, ArrowRight, RefreshCw } from 'lucide-react';
+import { useExchangeRates } from '../hooks/useExchangeRates';
 
 export function ExchangeRateWidget() {
-  const [rates, setRates] = useState<ExchangeRates>({
-    bank: 12.1,
-    mobile: 12.6,
-    street: 13.0,
-    rpnmore: 13.2
-  });
-  const [lossAmount, setLossAmount] = useState(110);
+  const { rates, loading, error, lossAmount, refetch } = useExchangeRates();
+  const [lastUpdated, setLastUpdated] = useState('');
 
-  // Calculate loss based on $100
   useEffect(() => {
-    const loss = Math.round((rates.rpnmore - rates.bank) * 100);
-    setLossAmount(loss);
-  }, [rates]);
+    if (rates.lastUpdated) {
+      const date = new Date(rates.lastUpdated);
+      setLastUpdated(date.toLocaleTimeString('en-GH', { 
+        hour: '2-digit', 
+        minute: '2-digit',
+        hour12: true 
+      }));
+    }
+  }, [rates.lastUpdated]);
+
+  if (loading) {
+    return (
+      <div className="bg-gradient-to-br from-amber-900/90 to-orange-900/90 backdrop-blur-sm rounded-2xl p-6 border border-amber-500/30 shadow-2xl max-w-md animate-pulse">
+        <div className="flex items-center gap-2 mb-4">
+          <span className="text-2xl">🇬🇭</span>
+          <div className="flex-1">
+            <div className="h-4 bg-white/20 rounded w-24 mb-2"></div>
+            <div className="h-3 bg-white/10 rounded w-16"></div>
+          </div>
+        </div>
+        <div className="space-y-3">
+          {[1, 2, 3, 4].map((i) => (
+            <div key={i} className="h-12 bg-white/10 rounded-lg"></div>
+          ))}
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="bg-gradient-to-br from-amber-900/90 to-orange-900/90 backdrop-blur-sm rounded-2xl p-6 border border-amber-500/30 shadow-2xl max-w-md">
@@ -32,9 +45,18 @@ export function ExchangeRateWidget() {
           <h3 className="text-white font-bold text-lg">Ghana Today</h3>
           <p className="text-amber-200 text-xs">Live Exchange Rates</p>
         </div>
-        <div className="ml-auto flex items-center gap-1 text-green-400 text-xs">
-          <TrendingUp size={14} />
-          <span>Live</span>
+        <div className="ml-auto flex items-center gap-2">
+          <div className="flex items-center gap-1 text-green-400 text-xs">
+            <TrendingUp size={14} />
+            <span>Live</span>
+          </div>
+          <button 
+            onClick={refetch}
+            className="p-1 hover:bg-white/10 rounded transition-colors"
+            title="Refresh rates"
+          >
+            <RefreshCw size={14} className="text-amber-300" />
+          </button>
         </div>
       </div>
 
@@ -48,7 +70,7 @@ export function ExchangeRateWidget() {
           </div>
           <div className="text-right">
             <span className="text-white font-bold">1 USD = </span>
-            <span className="text-red-400 font-bold">GHS {rates.bank.toFixed(1)}</span>
+            <span className="text-red-400 font-bold">GHS {rates.bank.toFixed(2)}</span>
           </div>
         </div>
 
@@ -57,7 +79,7 @@ export function ExchangeRateWidget() {
           <span className="text-gray-300 font-medium text-sm">Mobile Money</span>
           <div className="text-right">
             <span className="text-gray-400">1 USD = </span>
-            <span className="text-gray-300 font-bold">GHS {rates.mobile.toFixed(1)}</span>
+            <span className="text-gray-300 font-bold">GHS {rates.mobile.toFixed(2)}</span>
           </div>
         </div>
 
@@ -69,7 +91,7 @@ export function ExchangeRateWidget() {
           </div>
           <div className="text-right">
             <span className="text-gray-300">1 USD = </span>
-            <span className="text-orange-400 font-bold">GHS {rates.street.toFixed(1)}</span>
+            <span className="text-orange-400 font-bold">GHS {rates.street.toFixed(2)}</span>
           </div>
         </div>
 
@@ -81,10 +103,17 @@ export function ExchangeRateWidget() {
           </div>
           <div className="text-right">
             <span className="text-gray-300">1 USD = </span>
-            <span className="text-green-400 font-bold text-lg">GHS {rates.rpnmore.toFixed(1)}</span>
+            <span className="text-green-400 font-bold text-lg">GHS {rates.rpnmore.toFixed(2)}</span>
           </div>
         </div>
       </div>
+
+      {/* Last Updated */}
+      {lastUpdated && (
+        <p className="text-center text-amber-300/60 text-xs mt-2">
+          Updated: {lastUpdated}
+        </p>
+      )}
 
       {/* Loss Alert */}
       <div className="mt-4 flex items-center gap-2 bg-red-900/60 rounded-lg p-3 border border-red-500/40">
