@@ -243,3 +243,48 @@ export const SERVICES: Service[] = [
     additionalInfo: 'ResearchClaw powers the automation layer for all Ripple & More ventures. Our AI agents monitor markets, generate content, publish across platforms, and surface insights — 24 hours a day, 7 days a week. This is the technology that gives Ripple & More its competitive edge.',
   }
 ];
+
+
+// Blog Posts for SEO and Content Marketing
+export const BLOG_POSTS = [
+  {
+    id: 'ai-customer-agents-ghana',
+    title: 'How AI Customer Agents Are Replacing Support Teams in Ghana',
+    excerpt: 'Discover how Ghanaian businesses are saving $50K+ annually by deploying AI employees that handle customer support 24/7 on WhatsApp and Telegram.',
+    content: 'Full blog content here...',
+    imageUrl: 'https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200\u0026h=600\u0026fit=crop',
+    date: '2026-04-18',
+    author: 'Kk',
+    tags: ['AI', 'Ghana', 'Customer Service', 'Automation'],
+  },
+  {
+    id: 'african-crypto-playbook',
+    title: 'The African Crypto Playbook: Building Wealth with Digital Assets in 2026',
+    excerpt: 'A comprehensive guide to buying, holding, and growing cryptocurrency wealth from anywhere in Africa. Real strategies, real results.',
+    content: 'Full blog content here...',
+    imageUrl: 'https://images.unsplash.com/photo-1620321023374-d1a68fbc720d?w=1200\u0026h=600\u0026fit=crop',
+    date: '2026-04-17',
+    author: 'Kk',
+    tags: ['Crypto', 'Africa', 'Wealth Building', 'Web3'],
+  },
+  {
+    id: '24-hour-web-apps',
+    title: 'From Idea to Live in 24 Hours: Our Web App Development Process',
+    excerpt: 'See how we deploy production-ready web applications in 24 hours using React, Node.js, and Docker. Speed without sacrificing quality.',
+    content: 'Full blog content here...',
+    imageUrl: 'https://images.unsplash.com/photo-1555066931-4365d14bab8c?w=1200\u0026h=600\u0026fit=crop',
+    date: '2026-04-16',
+    author: 'Kk',
+    tags: ['Web Development', 'MVP', 'React', 'Startup'],
+  },
+  {
+    id: 'workflow-automation-case-study',
+    title: 'How One Ghanaian Company Scaled Without Hiring: Automation Case Study',
+    excerpt: 'Inside story: How we helped a Ghanaian SME automate 80% of their operations and scale revenue 3x without adding headcount.',
+    content: 'Full blog content here...',
+    imageUrl: 'https://images.unsplash.com/photo-1451187580459-43490279c0fa?w=1200\u0026h=600\u0026fit=crop',
+    date: '2026-04-15',
+    author: 'Kk',
+    tags: ['Automation', 'Case Study', 'Ghana', 'Business Growth'],
+  },
+];
