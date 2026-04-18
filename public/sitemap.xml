@@ -1,0 +1,136 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9"
+        xmlns:news="http://www.google.com/schemas/sitemap-news/0.9"
+        xmlns:xhtml="http://www.w3.org/1999/xhtml"
+        xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">
+  
+  <!-- Homepage -->
+  <url>
+    <loc>https://rpnmore.com/</loc>
+    <lastmod>2026-04-18</lastmod>
+    <changefreq>daily</changefreq>
+    <priority>1.0</priority>
+  </url>
+  
+  <!-- Blog Posts -->
+  <url>
+    <loc>https://rpnmore.com/blog/african-startups-outperform-2027</loc>
+    <lastmod>2026-04-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1553729459-efe14ef6055d?w=1200&amp;h=630&amp;fit=crop</image:loc>
+      <image:title>Why African Startups Will Outperform US Competitors by 2027</image:title>
+    </image:image>
+  </url>
+  
+  <url>
+    <loc>https://rpnmore.com/blog/built-8-ventures-solo</loc>
+    <lastmod>2026-04-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1517694712202-14dd9538aa97?w=1200&amp;h=630&amp;fit=crop</image:loc>
+      <image:title>I Built 8 Ventures Without a Team - The Stack</image:title>
+    </image:image>
+  </url>
+  
+  <url>
+    <loc>https://rpnmore.com/blog/claude-vs-chatgpt-agents</loc>
+    <lastmod>2026-04-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200&amp;h=630&amp;fit=crop</image:loc>
+      <image:title>Why Claude is Better Than ChatGPT for Building Real AI Agents</image:title>
+    </image:image>
+  </url>
+  
+  <url>
+    <loc>https://rpnmore.com/blog/crypto-africa-real-use-cases</loc>
+    <lastmod>2026-04-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1620321023374-d1a68fbc720d?w=1200&amp;h=630&amp;fit=crop</image:loc>
+      <image:title>Crypto in Africa: Real Use Cases vs. Silicon Valley Dreams</image:title>
+    </image:image>
+  </url>
+  
+  <url>
+    <loc>https://rpnmore.com/blog/ai-customer-agents-ghana</loc>
+    <lastmod>2026-04-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+    <image:image>
+      <image:loc>https://images.unsplash.com/photo-1677442136019-21780ecad995?w=1200&amp;h=600&amp;fit=crop</image:loc>
+      <image:title>How AI Customer Agents Are Replacing Support Teams in Ghana</image:title>
+    </image:image>
+  </url>
+  
+  <url>
+    <loc>https://rpnmore.com/blog/african-crypto-playbook</loc>
+    <lastmod>2026-04-17</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
+  <url>
+    <loc>https://rpnmore.com/blog/24-hour-web-apps</loc>
+    <lastmod>2026-04-16</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
+  <url>
+    <loc>https://rpnmore.com/blog/workflow-automation-case-study</loc>
+    <lastmod>2026-04-15</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.9</priority>
+  </url>
+  
+  <!-- Services/Ventures -->
+  <url>
+    <loc>https://rpnmore.com/venture/techafrik</loc>
+    <lastmod>2026-04-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>https://rpnmore.com/venture/dobuygoods</loc>
+    <lastmod>2026-04-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>https://rpnmore.com/venture/signupghana</loc>
+    <lastmod>2026-04-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>https://rpnmore.com/venture/biskaken</loc>
+    <lastmod>2026-04-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <url>
+    <loc>https://rpnmore.com/venture/researchclaw</loc>
+    <lastmod>2026-04-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.8</priority>
+  </url>
+  
+  <!-- Books Page -->
+  <url>
+    <loc>https://rpnmore.com/books</loc>
+    <lastmod>2026-04-18</lastmod>
+    <changefreq>monthly</changefreq>
+    <priority>0.7</priority>
+  </url>
+  
+</urlset>

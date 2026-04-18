@@ -1,3 +1,4 @@
+import { useEffect } from 'react';
 import { motion } from 'motion/react';
 import { useParams, Link, useLocation } from 'react-router-dom';
 import { Calendar, User, Clock, ArrowLeft, Share2, Twitter, Linkedin, Facebook, ArrowRight, Tag } from 'lucide-react';
@@ -33,6 +34,61 @@ export default function BlogPostPage({ post: providedPost }: BlogPostProps) {
   
   // Get post from either props or URL params
   const post = providedPost || BLOG_POSTS.find(p => p.slug === slug);
+  
+  // Update document title and meta tags for SEO
+  useEffect(() => {
+    if (post) {
+      // Update title
+      document.title = post.metaTitle || `${post.title} | Ripple & More`;
+      
+      // Update or create meta description
+      const metaDescription = document.querySelector('meta[name="description"]');
+      if (metaDescription) {
+        metaDescription.setAttribute('content', post.metaDescription || post.excerpt);
+      } else {
+        const meta = document.createElement('meta');
+        meta.name = 'description';
+        meta.content = post.metaDescription || post.excerpt;
+        document.head.appendChild(meta);
+      }
+      
+      // Update OG tags for LinkedIn sharing
+      const updateOrCreateMeta = (property: string, content: string, isProperty = true) => {
+        const selector = isProperty ? `meta[property="${property}"]` : `meta[name="${property}"]`;
+        let meta = document.querySelector(selector) as HTMLMetaElement;
+        if (meta) {
+          meta.setAttribute('content', content);
+        } else {
+          meta = document.createElement('meta');
+          if (isProperty) {
+            meta.setAttribute('property', property);
+          } else {
+            meta.setAttribute('name', property);
+          }
+          meta.setAttribute('content', content);
+          document.head.appendChild(meta);
+        }
+      };
+      
+      // LinkedIn optimal: 1200x630 image
+      const ogImage = post.imageUrl.includes('w=') ? post.imageUrl : `${post.imageUrl.replace('?w=', '?w=1200').replace('600', '630')}`;
+      
+      updateOrCreateMeta('og:title', post.metaTitle || post.title);
+      updateOrCreateMeta('og:description', post.metaDescription || post.excerpt);
+      updateOrCreateMeta('og:image', ogImage);
+      updateOrCreateMeta('og:url', `https://rpnmore.com/blog/${post.slug}`);
+      updateOrCreateMeta('og:type', 'article');
+      updateOrCreateMeta('twitter:card', 'summary_large_image', false);
+      updateOrCreateMeta('twitter:title', post.metaTitle || post.title, false);
+      updateOrCreateMeta('twitter:description', post.metaDescription || post.excerpt, false);
+      updateOrCreateMeta('twitter:image', ogImage, false);
+      
+      // Cleanup on unmount - restore original title
+      return () => {
+        document.title = 'Ripple & More Limited — Building Digital Wealth';
+      };
+    }
+  }, [post]);
   
   if (!post) {
     return (
