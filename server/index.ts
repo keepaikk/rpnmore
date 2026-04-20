@@ -117,6 +117,16 @@ async function startServer() {
   const app = express();
   const PORT = parseInt(process.env.PORT || "3000");
 
+  // Redirect signupghana subdomain to /signupghana route
+  app.use((req, res, next) => {
+    const host = req.get('host') || '';
+    if (host.startsWith('signupghana.') || host.startsWith('www.signupghana.')) {
+      const path = req.originalUrl === '/' ? '/signupghana' : `/signupghana${req.originalUrl}`;
+      return res.redirect(301, `https://rpnmore.com${path}`);
+    }
+    next();
+  });
+
   // Security middleware
   app.use(helmet({
     contentSecurityPolicy: false, // Disable for Vite HMR
