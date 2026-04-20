@@ -79,7 +79,7 @@ const VENTURES = [
     description: 'Branding & Visual Marketing in Ghana. Complete brand identity, 3D signage, LED screen advertising, and corporate merchandise.',
     category: 'Branding',
     icon: 'Palette',
-    externalLink: 'https://signupghana.rpnmore.com'
+    externalLink: 'https://rpnmore.com/signupghana'
   },
   {
     id: 'biskaken',
@@ -187,6 +187,73 @@ async function startServer() {
 
   // Mount blog routes (priority over legacy routes)
   app.use("/api/blog", blogRoutes);
+
+  // SignupGhana API
+  const sgProjects = [
+    {
+      id: "1",
+      image_url: "https://picsum.photos/seed/sgsign1/800/600",
+      caption: "3D Acrylic Signage – East Legon",
+      tag: "Signage",
+      created_at: new Date(Date.now() - 1000 * 60 * 15).toISOString(),
+    },
+    {
+      id: "2",
+      image_url: "https://picsum.photos/seed/sgled1/800/600",
+      caption: "LED Billboard Installation – Accra Mall",
+      tag: "LED",
+      created_at: new Date(Date.now() - 1000 * 60 * 65).toISOString(),
+    },
+    {
+      id: "3",
+      image_url: "https://picsum.photos/seed/sgbrand1/800/600",
+      caption: "Corporate Rebranding – Osu",
+      tag: "Branding",
+      created_at: new Date(Date.now() - 1000 * 60 * 125).toISOString(),
+    },
+    {
+      id: "4",
+      image_url: "https://picsum.photos/seed/sgmerch1/800/600",
+      caption: "Custom Staff Merchandise – Kumasi",
+      tag: "Merchandise",
+      created_at: new Date(Date.now() - 1000 * 60 * 300).toISOString(),
+    },
+    {
+      id: "5",
+      image_url: "https://picsum.photos/seed/sgneon1/800/600",
+      caption: "Neon Signage – Labone",
+      tag: "Signage",
+      created_at: new Date(Date.now() - 1000 * 60 * 1440).toISOString(),
+    },
+    {
+      id: "6",
+      image_url: "https://picsum.photos/seed/sgbrand2/800/600",
+      caption: "Vehicle Branding – Airport City",
+      tag: "Branding",
+      created_at: new Date(Date.now() - 1000 * 60 * 2880).toISOString(),
+    }
+  ];
+
+  const sgSettings = {
+    hero_bg_image: "https://images.unsplash.com/photo-1618005182384-a83a8bd57fbe?q=80&w=2564&auto=format&fit=crop",
+  };
+
+  app.get("/api/sg/projects", (_req, res) => {
+    const now = Date.now();
+    const dynamicProjects = sgProjects.map((p, index) => {
+      const offsets = [15, 65, 125, 300, 1440, 2880];
+      return {
+        ...p,
+        created_at: new Date(now - 1000 * 60 * offsets[index % 6]).toISOString()
+      };
+    });
+    const sorted = [...dynamicProjects].sort((a, b) => new Date(b.created_at).getTime() - new Date(a.created_at).getTime());
+    res.json(sorted);
+  });
+
+  app.get("/api/sg/settings", (_req, res) => {
+    res.json(sgSettings);
+  });
 
   // Legacy Services API (for backward compatibility)
   app.get("/api/services", async (_req, res) => {

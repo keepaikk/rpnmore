@@ -22,6 +22,7 @@ import { SERVICES as INITIAL_SERVICES, BOOKS as INITIAL_BOOKS, BLOG_POSTS } from
 import { motion, AnimatePresence } from 'motion/react';
 import { Lock, Unlock, X, Eye, EyeOff } from 'lucide-react';
 import { cn } from './lib/utils';
+import SignupGhanaPage from './signupghana/SignupGhanaPage';
 
 
 function ScrollToTop() {
@@ -412,6 +413,7 @@ export default function App() {
           <Route path="/books" element={<BooksGrid books={INITIAL_BOOKS} />} />
           <Route path="/venture/:id" element={<ServicePage services={services} />} />
           <Route path="/blog/:slug" element={<BlogPostPage />} />
+          <Route path="/signupghana" element={<SignupGhanaPage />} />
         </Routes>
 
         {/* Footer */}

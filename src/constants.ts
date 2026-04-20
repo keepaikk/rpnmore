@@ -191,7 +191,7 @@ export const SERVICES: Service[] = [
     icon: 'Palette',
     category: 'Branding',
     color: '#A855F7',
-    externalLink: 'https://signupghana.rpnmore.com',
+    externalLink: 'https://rpnmore.com/signupghana',
     features: [
       'Complete brand identity design',
       '3D signage fabrication & installation',
