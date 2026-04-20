@@ -1,12 +1,21 @@
 import { useState, useEffect } from 'react';
 import { motion } from 'motion/react';
-import { Plus, Save, Trash2, X, Database, Cloud, AlertCircle, Edit2, Cpu, FileText, Image as ImageIcon } from 'lucide-react';
+import { Plus, Save, Trash2, X, Database, Cloud, AlertCircle, Edit2, Cpu, FileText, Image as ImageIcon, MessageSquare, Users, Eye, CheckCircle, XCircle } from 'lucide-react';
 import { Service, BlogPost } from '../types';
 import { cn } from '../lib/utils';
 import {
   TEXT_MODELS, IMAGE_MODELS,
   getTextModel, getImageModel, setTextModel, setImageModel
 } from '../services/geminiService';
+import {
+  createPost,
+  deletePost,
+  getCommentsForModeration,
+  updateCommentStatus,
+  getBlogStats,
+  getSubscribers,
+  type BlogStats,
+} from '../services/blogApi';
 
 interface AdminDashboardProps {
   services: Service[];
