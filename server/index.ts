@@ -136,7 +136,7 @@ async function startServer() {
   // CORS configuration
   app.use(cors({
     origin: process.env.NODE_ENV === 'production' 
-      ? ['https://rpnmore.com', 'https://www.rpnmore.com']
+      ? ['https://rpnmore.com', 'https://www.rpnmore.com', 'https://signupghana.rpnmore.com']
       : true,
     credentials: true,
   }));
