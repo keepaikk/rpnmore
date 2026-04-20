@@ -247,6 +247,87 @@ export const SERVICES: Service[] = [
 
 // Blog Posts for SEO and Content Marketing
 export const BLOG_POSTS = [
+  // EU Age Verification Hack - 2026-04-20
+  {
+    id: 'eu-age-verification-hacked-2-minutes',
+    slug: 'eu-age-verification-hacked-2-minutes',
+    title: 'The EU Built an Age Verification App. It Got Hacked in 2 Minutes.',
+    excerpt: 'The European Commission spent over a year building an app to force ID checks on social media users. Security researcher Paul Moore hacked it in under 2 minutes — and the fundamental flaw can\'t be patched. Here\'s what Africa must learn before building its own digital ID systems.',
+    content: `
+# The EU Built an Age Verification App. It Got Hacked in 2 Minutes.
+
+The European Commission spent over a year building an age verification app designed to force ID checks on anyone using social media and ban users under 18 entirely. President Ursula von der Leyen unveiled it with the promise: "This will keep our children safe."
+
+Within 24 hours, security researcher Paul Moore hacked it in under 2 minutes.
+
+## What He Found
+
+Moore discovered three critical failures:
+
+**1. Passport photos stored unencrypted on devices.** Not encrypted, not secured — just sitting there, accessible to anyone with physical access.
+
+**2. PIN protection bypassed with a text editor.** Not a sophisticated exploit. Not a zero-day. A text editor.
+
+**3. A fundamental architecture flaw that no patch can fix.**
+
+That third flaw is the real story.
+
+## The Core Problem: "Someone" vs "You"
+
+The app replaces "I am over 18" with "someone is over 18."
+
+Here\'s what that means in practice: a teenager can route the verification request to any adult\'s device anywhere in the world. The website has no way to know who actually completed the check. The architecture assumes the user is the protected party — not the threat actor.
+
+Ironically, it\'s precisely those under 18 who are most motivated to bypass it.
+
+The EU\'s own [architecture documentation](https://github.com/eu-digital-identity-wallet/eudi-doc-architecture-and-reference-framework) acknowledges this relay attack vector — and admits they cannot mitigate it without breaking the core design of anonymous age verification.
+
+## Why Africa Should Care
+
+Nigeria, Kenya, South Africa, Ghana, and other African nations are building digital identity systems right now. Many are looking to the EU\'s model as a blueprint.
+
+This is dangerous.
+
+If African governments copy the EU\'s approach without understanding its flaws, they import the vulnerabilities. And unlike the EU, which has resources to iterate, most African nations are building these systems with limited budgets and smaller security teams.
+
+A broken digital ID system in Europe is an inconvenience. A broken digital ID system in Africa — where digital trust is still being established — could undermine adoption for a generation.
+
+## The Real Lesson
+
+The EU\'s mistake wasn\'t technical. It was conceptual. They applied the wrong threat model.
+
+In virtually every security scenario, the user and the system\'s interests are aligned: protect my data at all costs. But for age verification, most users don\'t want to present ID to access a website. The user becomes the threat actor.
+
+Every mitigation the EU considered assumes the user needs protection from external attackers. None consider that the user might want to bypass the system themselves.
+
+This is a design problem, not a code problem.
+
+## What African Policymakers Should Do
+
+1. **Don\'t copy the EU\'s architecture.** The relay attack is unfixable without breaking anonymity.
+2. **Build for your threat model.** Africa\'s challenges are different — mobile-first, limited connectivity, diverse identity systems.
+3. **Involve security researchers early.** The EU launched before proper testing. Africa can\'t afford that luxury.
+4. **Consider alternatives.** Age estimation via device behavior, progressive verification, and context-based access are all more privacy-preserving than mandatory ID checks.
+5. **Be transparent about limitations.** The EU presented its app as a solution. It\'s not. Africa should be honest about what digital ID can and cannot do.
+
+## The Bottom Line
+
+When regulation moves faster than technical understanding, you get systems that look impressive in press conferences but collapse under real-world scrutiny.
+
+The EU built security theatre. Africa needs security.
+
+The difference matters.
+    `,
+    imageUrl: '/uploads/eu-age-verification.jpg',
+    date: '2026-04-20',
+    author: 'TechAfrik',
+    authorBio: 'Technology, Innovation & Digital Assets for Africa',
+    tags: ['Digital Rights', 'CyberSecurity', 'EU Policy', 'Africa Tech', 'Digital Identity'],
+    readTime: '6 min read',
+    metaTitle: 'EU Age Verification App Hacked in 2 Minutes — Lessons for Africa',
+    metaDescription: 'The EU\'s age verification app was hacked in under 2 minutes. Here\'s why the fundamental flaw can\'t be fixed and what African governments must learn before building their own digital ID systems.',
+    keywords: ['EU age verification', 'digital identity', 'Africa digital ID', 'cybersecurity', 'privacy', 'age verification hack']
+  },
   // NEW BLOG POSTS - 2026-04-18
   {
     id: 'african-startups-outperform-2027',
