@@ -11,7 +11,7 @@ interface NavbarProps {
 
 const VENTURES = [
   { name: 'TechAfrik', href: 'https://techafrik.rpnmore.com', tag: 'AI & Blockchain Media' },
-  { name: 'Dobuygoods', href: 'https://dobuygoods.rpnmore.com', tag: 'Crypto Commerce' },
+  { name: 'Dobuygoods', href: 'https://dbg.rpnmore.com', tag: 'Crypto Commerce' },
   { name: 'SignupGhana', href: 'https://signupghana.rpnmore.com', tag: 'Branding & Signage' },
   { name: 'Biskaken', href: 'https://biskakenauto.rpnmore.com', tag: 'Auto Services' },
   { name: 'ResearchClaw', href: 'https://researchclaw.rpnmore.com', tag: 'AI Automation' },

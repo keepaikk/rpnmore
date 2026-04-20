@@ -438,7 +438,7 @@ export default function App() {
                 <div className="flex flex-col gap-2">
                   {[
                     { name: 'TechAfrik', href: 'https://techafrik.rpnmore.com' },
-                    { name: 'Dobuygoods', href: 'https://dobuygoods.rpnmore.com' },
+                    { name: 'Dobuygoods', href: 'https://dbg.rpnmore.com' },
                     { name: 'SignupGhana', href: 'https://signupghana.rpnmore.com' },
                     { name: 'Biskaken', href: 'https://biskakenauto.rpnmore.com' },
                     { name: 'ResearchClaw', href: 'https://researchclaw.rpnmore.com' },

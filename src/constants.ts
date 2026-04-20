@@ -171,7 +171,7 @@ export const SERVICES: Service[] = [
     icon: 'ShoppingCart',
     category: 'Commerce',
     color: '#00C2FF',
-    externalLink: 'https://dobuygoods.rpnmore.com',
+    externalLink: 'https://dbg.rpnmore.com',
     features: [
       'Buy & sell with Bitcoin, USDT, and more',
       'Used electronics marketplace',

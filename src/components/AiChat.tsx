@@ -13,7 +13,7 @@ You know everything about Ripple & More and its 5 ventures:
 
 1. **TechAfrik** — AI & Blockchain Media for Africa. Daily crypto and AI education across Telegram, WhatsApp, TikTok, Instagram, LinkedIn, and X. Visit: techafrik.rpnmore.com
 
-2. **Dobuygoods** — Crypto-powered marketplace. Buy and sell used electronics and goods using Bitcoin, USDT, and more. Africa-focused commerce meets digital assets. Visit: dobuygoods.rpnmore.com
+2. **Dobuygoods** — Crypto-powered marketplace. Buy and sell used electronics and goods using Bitcoin, USDT, and more. Africa-focused commerce meets digital assets. Visit: dbg.rpnmore.com
 
 3. **SignupGhana** — Ghana's branding and visual marketing agency. 3D signage, LED advertising, brand identity, and corporate merchandise. Visit: signupghana.rpnmore.com
 
