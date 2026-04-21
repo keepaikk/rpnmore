@@ -64,6 +64,8 @@ const VENTURES = [
     category: 'Media & Education',
     icon: 'Cpu',
     externalLink: 'https://techafrik.rpnmore.com'
+          'https://dbg.rpnmore.com',
+          'https://dobuygoods.rpnmore.com',
   },
   {
     id: 'dobuygoods',
@@ -128,8 +130,23 @@ async function startServer() {
     }
     
     // TechAfrik subdomain - redirect to venture page
+    
+    // Dobuygoods / DBG subdomain - redirect to venture page
+    if (host.startsWith('dbg.') || host.startsWith('dobuygoods.') || host.startsWith('www.dbg.') || host.startsWith('www.dobuygoods.')) {
+      return res.redirect(301, 'https://rpnmore.com/venture/dobuygoods');
+    }
     if (host.startsWith('techafrik.') || host.startsWith('www.techafrik.')) {
+    
+    // Dobuygoods / DBG subdomain - redirect to venture page
+    if (host.startsWith('dbg.') || host.startsWith('dobuygoods.') || host.startsWith('www.dbg.') || host.startsWith('www.dobuygoods.')) {
+      return res.redirect(301, 'https://rpnmore.com/venture/dobuygoods');
+    }
       return res.redirect(301, 'https://rpnmore.com/venture/techafrik');
+    
+    // Dobuygoods / DBG subdomain - redirect to venture page
+    if (host.startsWith('dbg.') || host.startsWith('dobuygoods.') || host.startsWith('www.dbg.') || host.startsWith('www.dobuygoods.')) {
+      return res.redirect(301, 'https://rpnmore.com/venture/dobuygoods');
+    }
     }
     
     next();
@@ -149,6 +166,8 @@ async function startServer() {
           'https://www.rpnmore.com', 
           'https://signupghana.rpnmore.com',
           'https://techafrik.rpnmore.com',
+          'https://dbg.rpnmore.com',
+          'https://dobuygoods.rpnmore.com',
           'https://dobuygoods.rpnmore.com',
           'https://biskakenauto.rpnmore.com',
           'https://researchclaw.rpnmore.com'

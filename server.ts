@@ -141,6 +141,11 @@ async function startServer() {
       return res.redirect(301, 'https://rpnmore.com/venture/techafrik');
     }
     
+    // Dobuygoods / DBG subdomain - redirect to venture page
+    if (host.startsWith('dbg.') || host.startsWith('dobuygoods.') || host.startsWith('www.dbg.') || host.startsWith('www.dobuygoods.')) {
+      return res.redirect(301, 'https://rpnmore.com/venture/dobuygoods');
+    }
+    
     next();
   });
 
