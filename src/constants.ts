@@ -247,6 +247,96 @@ export const SERVICES: Service[] = [
 
 // Blog Posts for SEO and Content Marketing
 export const BLOG_POSTS = [
+  // AI Jobs Africa - 2026-04-21
+  {
+    id: 'ai-jobs-africa-plan',
+    slug: 'ai-jobs-africa-plan',
+    title: 'AI Is Taking Jobs. Africa Has Millions of Unemployed Youth. What\'s the Plan?',
+    excerpt: 'Three paths, none of them easy. Africa can\'t follow the Western playbook — it needs to leapfrog into AI-native economies, building with AI, not just consuming it.',
+    content: `
+# AI Is Taking Jobs. Africa Has Millions of Unemployed Youth. What's the Plan?
+
+AI is eliminating jobs globally. In Africa, the continent with the youngest population on Earth, this isn't a future concern — it's a present crisis.
+
+60% of Africans are under 25. Millions are already unemployed. And the jobs they're training for today may not exist tomorrow.
+
+So what exactly is the plan?
+
+## The Three Paths
+
+### Path 1: Keep Training for Traditional Skills
+
+This is the default. Governments and institutions continue pushing traditional career paths — accounting, law, administration, manufacturing — while AI automates each one in real time.
+
+The problem: by the time students graduate, the job landscape has already shifted. Training for yesterday's jobs isn't a strategy. It's a delay tactic.
+
+### Path 2: Go All-In on AI
+
+Teach everyone AI skills. Prompt engineering. Machine learning fundamentals. Data literacy. Make Africa an AI-literate continent.
+
+The opportunity: Africa has raw talent and mobile-first infrastructure. Young Africans are already adapting faster than most Western institutions.
+
+The risk: being AI-literate doesn't mean being AI-employed. Knowing how to use ChatGPT isn't the same as building economic value with it.
+
+### Path 3: Prepare for a Post-Job Economy
+
+This is the uncomfortable one. What if the future isn't about "jobs" at all? What if value creation shifts from employment to entrepreneurship, creatorship, and community-scale innovation?
+
+For Africa, this might actually be the advantage. The continent never fully industrialized — and that skipped step might be its greatest asset.
+
+## Why Africa Can't Follow the Western Playbook
+
+The West is automating jobs they already have. They're replacing existing workers with AI. The transition is painful because people are losing something they built their lives around.
+
+Africa doesn't have that problem — or that luxury. The jobs being automated are jobs Africa never fully had. The industrial employment base that defined Western middle classes? Africa skipped most of it.
+
+This isn't a disadvantage. It's a leapfrog opportunity.
+
+Mobile money didn't follow the banking playbook — it created a new one. African AI adoption won't follow the Silicon Valley playbook either.
+
+## The Real Opportunity: Build What AI Can't
+
+AI is powerful, but it's not omniscient. It doesn't understand local context. It doesn't know why a specific community needs a specific solution. It can't navigate the informal economy that defines much of African commerce.
+
+The opportunity for Africa isn't in competing with AI. It's in building what AI can't do without humans:
+
+- **Local context**: AI doesn't understand why Nigerian payment flows work differently from Kenyan ones
+- **African problems**: Climate adaptation, informal economy infrastructure, last-mile delivery, agricultural logistics
+- **African solutions**: The innovations that emerge from necessity — the same innovations that made M-Pesa, Flutterwave, and Andela possible
+
+## What Needs to Happen Now
+
+1. **Stop training for yesterday** — Education systems must integrate AI tools into every discipline, not just computer science
+
+2. **Fund African AI builders** — Not AI consumers. The continent needs people building AI for African contexts, not just using tools built elsewhere
+
+3. **Redefine "employment"** — Entrepreneurship, creatorship, and community-scale innovation are not fallback options. They're the primary path
+
+4. **Build infrastructure for the informal economy** — AI tools that serve street vendors, small farmers, and local traders — not just tech companies
+
+5. **Create African AI policy** — Regulation that protects workers while enabling innovation, not Western copy-paste policies that ignore African realities
+
+## The Bottom Line
+
+AI is not waiting for Africa to be ready. The question isn't whether AI will reshape the continent's economy — it's whether Africa will shape AI, or be shaped by it.
+
+The continent that leapfrogged banking with mobile money, leapfrogged telecom with mobile-first, and leapfrogged energy with solar — can it leapfrog employment itself?
+
+The answer depends on what we do right now. Not next year. Not when the policy paper is finished. Now.
+
+What do you think — is Africa preparing fast enough?
+`,
+    imageUrl: 'https://tempfile.aiquickdraw.com/r/64e0f4a3713671358c86d91fcd2748cd_1776774488_ugfpqgcc.png',
+    date: '2026-04-21',
+    author: 'TechAfrik',
+    authorBio: 'Technology, Innovation & Digital Assets for Africa',
+    authorImage: '/techafrik-logo.png',
+    tags: ['AI', 'Africa Tech', 'Future of Work', 'Employment', 'Digital Economy'],
+    readTime: '7 min',
+    metaTitle: 'AI Is Taking Jobs — What\'s Africa\'s Plan for Millions of Unemployed Youth?',
+    metaDescription: 'AI is eliminating jobs globally. Africa has 60% of its population under 25. Three paths forward — and why Africa must leapfrog into AI-native economies.',
+    keywords: ['AI jobs Africa', 'future of work Africa', 'African youth employment', 'AI economy Africa', 'leapfrog development']
+  },
   // EU Age Verification Hack - 2026-04-20
   {
     id: 'eu-age-verification-hacked-2-minutes',
