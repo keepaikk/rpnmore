@@ -117,13 +117,21 @@ async function startServer() {
   const app = express();
   const PORT = parseInt(process.env.PORT || "3000");
 
-  // Redirect signupghana subdomain to /signupghana route
+  // Redirect subdomains to their respective routes
   app.use((req, res, next) => {
     const host = req.get('host') || '';
+    
+    // SignupGhana subdomain
     if (host.startsWith('signupghana.') || host.startsWith('www.signupghana.')) {
       const path = req.originalUrl === '/' ? '/signupghana' : `/signupghana${req.originalUrl}`;
       return res.redirect(301, `https://rpnmore.com${path}`);
     }
+    
+    // TechAfrik subdomain - redirect to venture page
+    if (host.startsWith('techafrik.') || host.startsWith('www.techafrik.')) {
+      return res.redirect(301, 'https://rpnmore.com/#techafrik');
+    }
+    
     next();
   });
 
@@ -136,7 +144,15 @@ async function startServer() {
   // CORS configuration
   app.use(cors({
     origin: process.env.NODE_ENV === 'production' 
-      ? ['https://rpnmore.com', 'https://www.rpnmore.com', 'https://signupghana.rpnmore.com']
+      ? [
+          'https://rpnmore.com', 
+          'https://www.rpnmore.com', 
+          'https://signupghana.rpnmore.com',
+          'https://techafrik.rpnmore.com',
+          'https://dobuygoods.rpnmore.com',
+          'https://biskakenauto.rpnmore.com',
+          'https://researchclaw.rpnmore.com'
+        ]
       : true,
     credentials: true,
   }));

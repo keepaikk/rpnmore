@@ -126,6 +126,24 @@ async function startServer() {
 
   app.use(express.json());
 
+  // Redirect subdomains to their respective routes
+  app.use((req, res, next) => {
+    const host = req.get('host') || '';
+    
+    // SignupGhana subdomain
+    if (host.startsWith('signupghana.') || host.startsWith('www.signupghana.')) {
+      const path = req.originalUrl === '/' ? '/signupghana' : `/signupghana${req.originalUrl}`;
+      return res.redirect(301, `https://rpnmore.com${path}`);
+    }
+    
+    // TechAfrik subdomain - redirect to venture page
+    if (host.startsWith('techafrik.') || host.startsWith('www.techafrik.')) {
+      return res.redirect(301, 'https://rpnmore.com/#techafrik');
+    }
+    
+    next();
+  });
+
   // Migrate Firebase services to the canonical ventures list on startup
   try {
     if (db) {

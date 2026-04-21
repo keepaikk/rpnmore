@@ -116,6 +116,7 @@ export default function Navbar({ isDark }: NavbarProps) {
 
           <motion.a
             href="#contact"
+            onClick={(e: React.MouseEvent) => { e.preventDefault(); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); }}
             initial={{ opacity: 0, scale: 0.9 }}
             animate={{ opacity: 1, scale: 1 }}
             className="px-5 py-2 text-sm font-semibold rounded-full bg-[#F5A623] text-[#0A0F1E] hover:bg-[#F5A623]/80 transition-colors"
@@ -176,7 +177,7 @@ export default function Navbar({ isDark }: NavbarProps) {
             </div>
             <a
               href="#contact"
-              onClick={() => setIsOpen(false)}
+              onClick={(e) => { setIsOpen(false); e.preventDefault(); document.getElementById('contact')?.scrollIntoView({ behavior: 'smooth' }); }}
               className="w-full py-4 font-semibold rounded-xl text-center block bg-[#F5A623] text-[#0A0F1E]"
             >
               Get Started →

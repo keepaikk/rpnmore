@@ -2,7 +2,8 @@ import {StrictMode} from 'react';
 import {createRoot} from 'react-dom/client';
 import App from './App.tsx';
 import './index.css';
-import './firebase.ts';
+// Firebase is lazy-loaded via firebase-lazy.ts only when needed
+// This reduces initial bundle size by ~425KB
 
 createRoot(document.getElementById('root')!).render(
   <StrictMode>
