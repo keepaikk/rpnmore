@@ -59,7 +59,7 @@ const VENTURES = [
     description: 'AI & Blockchain Media for Africa. Delivering tech education, news, and insights across Telegram, WhatsApp, TikTok, Instagram, LinkedIn & X.',
     category: 'Media & Education',
     icon: 'Cpu',
-    externalLink: 'https://techafrik.rpnmore.com'
+    externalLink: 'https://rpnmore.com/venture/techafrik'
   },
   {
     id: 'dobuygoods',

@@ -409,10 +409,16 @@ function formatContent(content: string): string {
   // Remove leading/trailing whitespace and normalize line breaks
   let html = content.trim();
   
-  // Convert markdown headers
+  // Convert hashtag lines to styled tags (e.g., "AfricaTech StartupLife" on its own line)
+  // These are plain text hashtags without the # prefix (already cleaned in DB)
+  // Lines that look like "Word1 Word2 Word3" (3+ capitalized words on one line)
+  // will be rendered as hashtag chips
+  html = html.replace(/^(?=[A-Z][a-zA-Z]+(?:\s+[A-Z][a-zA-Z]+)+$)(.+)$/gm, '<div class="hashtag-line">$1</div>');
+  
+  // Convert markdown headers (## and ### only — H1 is already in the title field)
   html = html.replace(/^### (.+)$/gm, '<h3>$1</h3>');
   html = html.replace(/^## (.+)$/gm, '<h2>$1</h2>');
-  html = html.replace(/^# (.+)$/gm, '<h1>$1</h1>');
+  // Skip H1 conversion — title is already rendered separately
   
   // Convert bold
   html = html.replace(/\*\*(.+?)\*\*/g, '<strong>$1</strong>');
