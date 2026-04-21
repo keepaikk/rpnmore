@@ -254,8 +254,6 @@ export const BLOG_POSTS = [
     title: 'AI Is Taking Jobs. Africa Has Millions of Unemployed Youth. What\'s the Plan?',
     excerpt: 'Three paths, none of them easy. Africa can\'t follow the Western playbook — it needs to leapfrog into AI-native economies, building with AI, not just consuming it.',
     content: `
-# AI Is Taking Jobs. Africa Has Millions of Unemployed Youth. What's the Plan?
-
 AI is eliminating jobs globally. In Africa, the continent with the youngest population on Earth, this isn't a future concern — it's a present crisis.
 
 60% of Africans are under 25. Millions are already unemployed. And the jobs they're training for today may not exist tomorrow.
@@ -344,8 +342,6 @@ What do you think — is Africa preparing fast enough?
     title: 'The EU Built an Age Verification App. It Got Hacked in 2 Minutes.',
     excerpt: 'The European Commission spent over a year building an app to force ID checks on social media users. Security researcher Paul Moore hacked it in under 2 minutes — and the fundamental flaw can\'t be patched. Here\'s what Africa must learn before building its own digital ID systems.',
     content: `
-# The EU Built an Age Verification App. It Got Hacked in 2 Minutes.
-
 The European Commission spent over a year building an age verification app designed to force ID checks on anyone using social media and ban users under 18 entirely. President Ursula von der Leyen unveiled it with the promise: "This will keep our children safe."
 
 Within 24 hours, security researcher Paul Moore hacked it in under 2 minutes.
