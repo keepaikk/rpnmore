@@ -129,7 +129,7 @@ async function startServer() {
     
     // TechAfrik subdomain - redirect to venture page
     if (host.startsWith('techafrik.') || host.startsWith('www.techafrik.')) {
-      return res.redirect(301, 'https://rpnmore.com/#techafrik');
+      return res.redirect(301, 'https://rpnmore.com/venture/techafrik');
     }
     
     next();

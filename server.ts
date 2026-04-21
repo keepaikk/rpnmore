@@ -138,7 +138,7 @@ async function startServer() {
     
     // TechAfrik subdomain - redirect to venture page
     if (host.startsWith('techafrik.') || host.startsWith('www.techafrik.')) {
-      return res.redirect(301, 'https://rpnmore.com/#techafrik');
+      return res.redirect(301, 'https://rpnmore.com/venture/techafrik');
     }
     
     next();
@@ -409,6 +409,172 @@ async function startServer() {
     res.status(400).json({ error: 'Provide urls or images array' });
   });
 
+  // Blog API — PostgreSQL-backed (proper blog routes)
+  // GET /api/blog/posts — list published posts
+  app.get("/api/blog/posts", async (req, res) => {
+    try {
+      if (!process.env.DATABASE_URL) {
+        return res.json({ posts: [], pagination: { page: 1, limit: 10, total: 0, pages: 0 } });
+      }
+      const { page = 1, limit = 10, tag, status = 'published' } = req.query;
+      const offset = (Number(page) - 1) * Number(limit);
+      
+      let sql = `SELECT id, slug, title, excerpt, author, author_image, image_url, published_at, tags, read_time, views, meta_title, meta_description FROM blog_posts WHERE 1=1`;
+      const params: any[] = [];
+      
+      if (status !== 'all') {
+        params.push(status);
+        sql += ` AND status = $${params.length}`;
+      }
+      if (tag) {
+        params.push(tag as string);
+        sql += ` AND $${params.length} = ANY(tags)`;
+      }
+      
+      const countResult = await pool.query(`SELECT COUNT(*) as total FROM (${sql}) as filtered`, params);
+      const total = Number(countResult.rows[0]?.total || 0);
+      
+      params.push(Number(limit), offset);
+      sql += ` ORDER BY published_at DESC LIMIT $${params.length - 1} OFFSET $${params.length}`;
+      
+      const result = await pool.query(sql, params);
+      res.json({
+        posts: result.rows,
+        pagination: { page: Number(page), limit: Number(limit), total, pages: Math.ceil(total / Number(limit)) }
+      });
+    } catch (err) {
+      console.error('Blog posts error:', err);
+      res.status(500).json({ error: 'Failed to fetch posts' });
+    }
+  });
+
+  // GET /api/blog/posts/:slug — single post with comments
+  app.get("/api/blog/posts/:slug", async (req, res) => {
+    try {
+      if (!process.env.DATABASE_URL) {
+        return res.status(404).json({ error: 'Post not found' });
+      }
+      const { slug } = req.params;
+      const result = await pool.query(`SELECT id, slug, title, content, excerpt, author, author_bio, author_image, image_url, published_at, updated_at, tags, read_time, views, meta_title, meta_description, keywords, status FROM blog_posts WHERE slug = $1`, [slug]);
+      
+      if (result.rows.length === 0) {
+        return res.status(404).json({ error: 'Post not found' });
+      }
+      
+      const post = result.rows[0];
+      
+      // Get approved comments
+      const comments = await pool.query(`SELECT id, author_name, content, created_at, parent_id FROM comments WHERE post_id = $1 AND status = 'approved' ORDER BY created_at ASC`, [post.id]);
+      
+      // Increment views
+      await pool.query('UPDATE blog_posts SET views = views + 1 WHERE id = $1', [post.id]).catch(() => {});
+      
+      res.json({ ...post, comments: comments.rows });
+    } catch (err) {
+      console.error('Blog post error:', err);
+      res.status(500).json({ error: 'Failed to fetch post' });
+    }
+  });
+
+  // POST /api/blog/posts — create new post (admin)
+  app.post("/api/blog/posts", async (req, res) => {
+    try {
+      if (!process.env.DATABASE_URL) {
+        return res.status(500).json({ error: 'Database not configured' });
+      }
+      const { title, content, excerpt, author, author_bio, author_image, image_url, tags, meta_title, meta_description, keywords, read_time, status = 'draft' } = req.body;
+      
+      if (!title || !content) {
+        return res.status(400).json({ error: 'Title and content are required' });
+      }
+      
+      const slug = title.toLowerCase().replace(/[^a-z0-9\s-]/g, '').replace(/\s+/g, '-').replace(/-+/g, '-').replace(/^-|-$/g, '').substring(0, 255);
+      
+      const existing = await pool.query('SELECT id FROM blog_posts WHERE slug = $1', [slug]);
+      if (existing.rows.length > 0) {
+        return res.status(409).json({ error: 'A post with this title already exists' });
+      }
+      
+      const result = await pool.query(`INSERT INTO blog_posts (slug, title, content, excerpt, author, author_bio, author_image, image_url, tags, meta_title, meta_description, keywords, read_time, status, published_at) VALUES ($1, $2, $3, $4, $5, $6, $7, $8, $9, $10, $11, $12, $13, $14, CURRENT_TIMESTAMP) RETURNING id, slug, title, status`, [slug, title, content, excerpt || '', author || 'Ripple & More Team', author_bio || '', author_image || '', image_url || '', tags || [], meta_title || '', meta_description || '', keywords || [], read_time || '', status]);
+      
+      res.status(201).json(result.rows[0]);
+    } catch (err) {
+      console.error('Create blog post error:', err);
+      res.status(500).json({ error: 'Failed to create post' });
+    }
+  });
+
+  // PUT /api/blog/posts/:slug — update post (admin)
+  app.put("/api/blog/posts/:slug", async (req, res) => {
+    try {
+      if (!process.env.DATABASE_URL) {
+        return res.status(500).json({ error: 'Database not configured' });
+      }
+      const { slug } = req.params;
+      const updates = req.body;
+      
+      const setClauses: string[] = [];
+      const params: any[] = [];
+      let paramIndex = 1;
+      
+      const allowedFields = ['title', 'content', 'excerpt', 'author', 'author_bio', 'author_image', 'image_url', 'tags', 'meta_title', 'meta_description', 'keywords', 'read_time', 'status'];
+      for (const field of allowedFields) {
+        if (updates[field] !== undefined) {
+          setClauses.push(`${field} = $${paramIndex}`);
+          params.push(updates[field]);
+          paramIndex++;
+        }
+      }
+      
+      if (setClauses.length === 0) {
+        return res.status(400).json({ error: 'No fields to update' });
+      }
+      
+      setClauses.push(`updated_at = CURRENT_TIMESTAMP`);
+      params.push(slug);
+      
+      const result = await pool.query(`UPDATE blog_posts SET ${setClauses.join(', ')} WHERE slug = $${paramIndex} RETURNING id, slug, title, status`, params);
+      
+      if (result.rows.length === 0) {
+        return res.status(404).json({ error: 'Post not found' });
+      }
+      
+      res.json(result.rows[0]);
+    } catch (err) {
+      console.error('Update blog post error:', err);
+      res.status(500).json({ error: 'Failed to update post' });
+    }
+  });
+
+  // DELETE /api/blog/posts/:slug — delete post (admin)
+  app.delete("/api/blog/posts/:slug", async (req, res) => {
+    try {
+      if (!process.env.DATABASE_URL) {
+        return res.status(500).json({ error: 'Database not configured' });
+      }
+      const { slug } = req.params;
+      const result = await pool.query('DELETE FROM blog_posts WHERE slug = $1 RETURNING id', [slug]);
+      
+      if (result.rows.length === 0) {
+        return res.status(404).json({ error: 'Post not found' });
+      }
+      
+      res.json({ success: true, message: 'Post deleted' });
+    } catch (err) {
+      console.error('Delete blog post error:', err);
+      res.status(500).json({ error: 'Failed to delete post' });
+    }
+  });
+
+  // CORS headers for API routes
+  app.use('/api', (req, res, next) => {
+    res.header('Access-Control-Allow-Origin', '*');
+    res.header('Access-Control-Allow-Methods', 'GET, POST, PUT, DELETE, OPTIONS');
+    res.header('Access-Control-Allow-Headers', 'Content-Type, Authorization');
+    if (req.method === 'OPTIONS') return res.sendStatus(200);
+    next();
+  });
+
   // Vite middleware for development
   if (process.env.NODE_ENV !== "production") {
     const vite = await createViteServer({
@@ -419,7 +585,10 @@ async function startServer() {
   } else {
     const distPath = path.join(process.cwd(), "dist");
     app.use(express.static(distPath));
-    app.get("*", (req, res) => {
+    // SPA fallback — serve index.html for all non-API routes
+    app.get("*", (req, res, next) => {
+      // Don't serve index.html for API routes
+      if (req.path.startsWith('/api/')) return next();
       res.sendFile(path.join(distPath, "index.html"));
     });
   }
