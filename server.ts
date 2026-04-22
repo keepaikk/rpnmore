@@ -580,6 +580,119 @@ async function startServer() {
     next();
   });
 
+  // SEO: Dynamic sitemap.xml from database
+  app.get('/sitemap.xml', async (req, res) => {
+    try {
+      const staticPages = [
+        { loc: 'https://rpnmore.com/', changefreq: 'daily', priority: '1.0' },
+        { loc: 'https://rpnmore.com/books', changefreq: 'monthly', priority: '0.7' },
+        { loc: 'https://rpnmore.com/venture/techafrik', changefreq: 'monthly', priority: '0.8' },
+        { loc: 'https://rpnmore.com/venture/dobuygoods', changefreq: 'monthly', priority: '0.8' },
+        { loc: 'https://rpnmore.com/venture/signupghana', changefreq: 'monthly', priority: '0.8' },
+        { loc: 'https://rpnmore.com/venture/biskaken', changefreq: 'monthly', priority: '0.8' },
+        { loc: 'https://rpnmore.com/venture/researchclaw', changefreq: 'monthly', priority: '0.8' },
+      ];
+
+      let blogPosts: any[] = [];
+      if (process.env.DATABASE_URL) {
+        const result = await pool.query("SELECT slug, title, image_url, published_at FROM blog_posts WHERE status = 'published' ORDER BY published_at DESC");
+        blogPosts = result.rows;
+      }
+
+      const today = new Date().toISOString().split('T')[0];
+      let xml = '<?xml version="1.0" encoding="UTF-8"?>\n';
+      xml += '<urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9" xmlns:image="http://www.google.com/schemas/sitemap-image/1.1">\n';
+      
+      for (const page of staticPages) {
+        xml += `  <url>\n    <loc>${page.loc}</loc>\n    <lastmod>${today}</lastmod>\n    <changefreq>${page.changefreq}</changefreq>\n    <priority>${page.priority}</priority>\n  </url>\n`;
+      }
+      
+      for (const post of blogPosts) {
+        xml += `  <url>\n`;
+        xml += `    <loc>https://rpnmore.com/blog/${post.slug}</loc>\n`;
+        xml += `    <lastmod>${post.published_at?.toISOString?.()?.split?.('T')?.[0] || today}</lastmod>\n`;
+        xml += `    <changefreq>monthly</changefreq>\n`;
+        xml += `    <priority>0.9</priority>\n`;
+        if (post.image_url) {
+          xml += `    <image:image>\n      <image:loc>${post.image_url}</image:loc>\n      <image:title>${post.title?.replace(/&/g, '&amp;').replace(/</g, '&lt;').replace(/>/g, '&gt;')}</image:title>\n    </image:image>\n`;
+        }
+        xml += `  </url>\n`;
+      }
+      
+      xml += '</urlset>';
+      res.header('Content-Type', 'application/xml');
+      res.send(xml);
+    } catch (err) {
+      console.error('Sitemap error:', err);
+      res.status(500).send('Error generating sitemap');
+    }
+  });
+
+  // SEO: Pre-render blog posts for crawlers (Facebook, Twitter, Google, LinkedIn)
+  const generateBlogHtml = (post: any) => `<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>${post.title?.replace(/</g, '&lt;') || 'Blog Post'} — Ripple & More Limited</title>
+  <meta name="description" content="${(post.excerpt || post.meta_description || '').replace(/</g, '&lt;').substring(0, 160)}">
+  <meta name="keywords" content="${(post.tags || []).join(', ')}">
+  <meta name="author" content="${post.author || 'Ripple & More Team'}">
+  <link rel="canonical" href="https://rpnmore.com/blog/${post.slug}">
+  
+  <!-- Open Graph -->
+  <meta property="og:type" content="article">
+  <meta property="og:title" content="${post.title?.replace(/"/g, '&quot;') || ''}">
+  <meta property="og:description" content="${(post.excerpt || '').replace(/"/g, '&quot;').substring(0, 200)}">
+  <meta property="og:url" content="https://rpnmore.com/blog/${post.slug}">
+  <meta property="og:site_name" content="Ripple & More Limited">
+  ${post.image_url ? `<meta property="og:image" content="${post.image_url}">` : '<meta property="og:image" content="https://rpnmore.com/og-image.png">'}
+  <meta property="og:image:width" content="1200">
+  <meta property="og:image:height" content="630">
+  
+  <!-- Twitter Card -->
+  <meta name="twitter:card" content="summary_large_image">
+  <meta name="twitter:site" content="@rpnmore">
+  <meta name="twitter:title" content="${post.title?.replace(/"/g, '&quot;') || ''}">
+  <meta name="twitter:description" content="${(post.excerpt || '').replace(/"/g, '&quot;').substring(0, 200)}">
+  ${post.image_url ? `<meta name="twitter:image" content="${post.image_url}">` : ''}
+  
+  <!-- JSON-LD Article Schema -->
+  <script type="application/ld+json">
+  {
+    "@context": "https://schema.org",
+    "@type": "BlogPosting",
+    "headline": "${post.title?.replace(/"/g, '\\"') || ''}",
+    "description": "${(post.excerpt || '').replace(/"/g, '\\"').substring(0, 160)}",
+    "author": {
+      "@type": "Person",
+      "name": "${post.author || 'Ripple & More Team'}"
+    },
+    "publisher": {
+      "@type": "Organization",
+      "name": "Ripple & More Limited",
+      "url": "https://rpnmore.com"
+    },
+    "datePublished": "${post.published_at || new Date().toISOString()}",
+    "dateModified": "${post.updated_at || post.published_at || new Date().toISOString()}",
+    "mainEntityOfPage": "https://rpnmore.com/blog/${post.slug}",
+    "image": "${post.image_url || 'https://rpnmore.com/og-image.png'}"
+  }
+  </script>
+</head>
+<body>
+  <article>
+    <h1>${post.title || 'Blog Post'}</h1>
+    <p><strong>By ${post.author || 'Ripple & More Team'}</strong></p>
+    ${post.image_url ? `<img src="${post.image_url}" alt="${post.title || ''}" style="max-width: 100%;">` : ''}
+    <p>${post.excerpt || ''}</p>
+    <div>${post.content || ''}</div>
+  </article>
+  <p><a href="https://rpnmore.com/blog">Back to Blog</a></p>
+  <p><a href="https://rpnmore.com">Ripple & More Limited</a></p>
+</body>
+</html>`;
+
   // Vite middleware for development
   if (process.env.NODE_ENV !== "production") {
     const vite = await createViteServer({
@@ -590,6 +703,25 @@ async function startServer() {
   } else {
     const distPath = path.join(process.cwd(), "dist");
     app.use(express.static(distPath));
+    
+    // SEO: Pre-render blog posts for social crawlers
+    app.get("/blog/:slug", async (req, res, next) => {
+      const userAgent = req.get('user-agent') || '';
+      const isCrawler = /facebookexternalhit|twitterbot|linkedinbot|googlebot|bingbot|pinterest/i.test(userAgent);
+      
+      if (isCrawler && process.env.DATABASE_URL) {
+        try {
+          const result = await pool.query('SELECT * FROM blog_posts WHERE slug = $1 AND status = \'published\'', [req.params.slug]);
+          if (result.rows.length > 0) {
+            return res.send(generateBlogHtml(result.rows[0]));
+          }
+        } catch (err) {
+          console.error('Blog pre-render error:', err);
+        }
+      }
+      next();
+    });
+    
     // SPA fallback — serve index.html for all non-API routes
     app.get("*", (req, res, next) => {
       // Don't serve index.html for API routes

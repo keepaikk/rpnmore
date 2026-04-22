@@ -6,6 +6,11 @@
     <meta name="description" content="Ripple & More Limited — Building Digital Wealth. AI-first, Africa-focused ventures in crypto, content, and digital assets. Start small, grow smart." />
     <meta name="theme-color" content="#0a0a0a" />
     <meta name="keywords" content="AI automation Ghana, crypto Africa, digital assets, web development Ghana, business automation, n8n workflows, React development, blockchain Africa, fintech Ghana, startup Africa" />
+    <meta name="author" content="Ripple & More Limited" />
+    <meta name="robots" content="index, follow, max-image-preview:large, max-snippet:-1, max-video-preview:-1" />
+    
+    <!-- Google Search Console Verification (replace content with actual verification code) -->
+    <meta name="google-site-verification" content="PENDING_VERIFICATION" />
     
     <!-- Open Graph -->
     <meta property="og:title" content="Ripple & More Limited — Building Digital Wealth" />
@@ -13,11 +18,15 @@
     <meta property="og:type" content="website" />
     <meta property="og:url" content="https://rpnmore.com" />
     <meta property="og:image" content="https://rpnmore.com/og-image.png" />
+    <meta property="og:image:width" content="1200" />
+    <meta property="og:image:height" content="630" />
     <meta property="og:site_name" content="Ripple & More Limited" />
+    <meta property="og:locale" content="en_US" />
     
     <!-- Twitter Card -->
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:site" content="@rpnmore" />
+    <meta name="twitter:creator" content="@rpnmore" />
     <meta name="twitter:title" content="Ripple & More Limited — Building Digital Wealth" />
     <meta name="twitter:description" content="AI-first, Africa-focused ventures in crypto, content, and digital assets." />
     <meta name="twitter:image" content="https://rpnmore.com/og-image.png" />
@@ -30,6 +39,8 @@
     <!-- Preconnect to critical origins -->
     <link rel="preconnect" href="https://fonts.googleapis.com" />
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link rel="preconnect" href="https://rpnmore.com" />
+    <link rel="dns-prefetch" href="https://fonts.googleapis.com" />
     
     <!-- Optimized Google Fonts with display=swap -->
     <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet" />
@@ -40,9 +51,179 @@
     
     <!-- Favicon -->
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    
+    <!-- JSON-LD Structured Data -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org",
+      "@graph": [
+        {
+          "@type": "Organization",
+          "@id": "https://rpnmore.com/#organization",
+          "name": "Ripple & More Limited",
+          "url": "https://rpnmore.com",
+          "logo": {
+            "@type": "ImageObject",
+            "url": "https://rpnmore.com/og-image.png",
+            "width": 1200,
+            "height": 630
+          },
+          "description": "AI-first, Africa-focused ventures in crypto, content, and digital assets. Building digital wealth across the continent.",
+          "foundingDate": "2024",
+          "founder": {
+            "@type": "Person",
+            "name": "Ayi-kwaku Odame"
+          },
+          "sameAs": [
+            "https://twitter.com/rpnmore",
+            "https://linkedin.com/company/rpnmore"
+          ],
+          "address": {
+            "@type": "PostalAddress",
+            "addressLocality": "Accra",
+            "addressCountry": "GH"
+          }
+        },
+        {
+          "@type": "WebSite",
+          "@id": "https://rpnmore.com/#website",
+          "url": "https://rpnmore.com",
+          "name": "Ripple & More Limited",
+          "description": "AI-first, Africa-focused ventures in crypto, content, and digital assets",
+          "publisher": {
+            "@id": "https://rpnmore.com/#organization"
+          },
+          "potentialAction": {
+            "@type": "SearchAction",
+            "target": "https://rpnmore.com/blog?search={search_term_string}",
+            "query-input": "required name=search_term_string"
+          }
+        },
+        {
+          "@type": "ItemList",
+          "@id": "https://rpnmore.com/#ventures",
+          "name": "Ripple & More Ventures",
+          "description": "Multi-venture company building solutions for Africa",
+          "numberOfItems": 5,
+          "itemListElement": [
+            {
+              "@type": "ListItem",
+              "position": 1,
+              "item": {
+                "@type": "Thing",
+                "name": "TechAfrik",
+                "description": "AI & Blockchain Media for Africa. Tech education, news, and insights across Telegram, WhatsApp, TikTok, Instagram, LinkedIn & X.",
+                "url": "https://rpnmore.com/venture/techafrik"
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 2,
+              "item": {
+                "@type": "Thing",
+                "name": "Dobuygoods",
+                "description": "Online marketplace for cars and electronics in Ghana. Buy and sell with trust.",
+                "url": "https://rpnmore.com/venture/dobuygoods"
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 3,
+              "item": {
+                "@type": "Thing",
+                "name": "SignupGhana",
+                "description": "Ghana business registration and compliance platform. Register your business in hours.",
+                "url": "https://rpnmore.com/venture/signupghana"
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 4,
+              "item": {
+                "@type": "Thing",
+                "name": "Biskaken",
+                "description": "Business automation tools. Streamline operations with AI-powered workflows.",
+                "url": "https://rpnmore.com/venture/biskaken"
+              }
+            },
+            {
+              "@type": "ListItem",
+              "position": 5,
+              "item": {
+                "@type": "Thing",
+                "name": "ResearchClaw",
+                "description": "AI-powered research and content tools. Generate insights at scale.",
+                "url": "https://rpnmore.com/venture/researchclaw"
+              }
+            }
+          ]
+        }
+      ]
+    }
+    </script>
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
+    
+    <!-- Noscript fallback for SEO crawlers that don't execute JavaScript -->
+    <noscript>
+      <div style="padding: 2rem; max-width: 1200px; margin: 0 auto; font-family: Inter, sans-serif;">
+        <h1 style="font-size: 2.5rem; margin-bottom: 0.5rem;">Ripple & More Limited</h1>
+        <p style="font-size: 1.25rem; color: #666; margin-bottom: 2rem;">Building Digital Wealth — AI-first, Africa-focused ventures in crypto, content, and digital assets.</p>
+        
+        <h2 style="font-size: 1.5rem; margin-top: 2rem; margin-bottom: 1rem;">Our Ventures</h2>
+        
+        <div style="margin-bottom: 1.5rem;">
+          <h3><a href="/venture/techafrik">TechAfrik</a></h3>
+          <p>AI & Blockchain Media for Africa. Tech education, news, and insights across Telegram, WhatsApp, TikTok, Instagram, LinkedIn & X.</p>
+        </div>
+        
+        <div style="margin-bottom: 1.5rem;">
+          <h3><a href="/venture/dobuygoods">Dobuygoods</a></h3>
+          <p>Online marketplace for cars and electronics in Ghana. Buy and sell with trust.</p>
+        </div>
+        
+        <div style="margin-bottom: 1.5rem;">
+          <h3><a href="/venture/signupghana">SignupGhana</a></h3>
+          <p>Ghana business registration and compliance platform. Register your business in hours.</p>
+        </div>
+        
+        <div style="margin-bottom: 1.5rem;">
+          <h3><a href="/venture/biskaken">Biskaken</a></h3>
+          <p>Business automation tools. Streamline operations with AI-powered workflows.</p>
+        </div>
+        
+        <div style="margin-bottom: 1.5rem;">
+          <h3><a href="/venture/researchclaw">ResearchClaw</a></h3>
+          <p>AI-powered research and content tools. Generate insights at scale.</p>
+        </div>
+        
+        <h2 style="font-size: 1.5rem; margin-top: 2rem; margin-bottom: 1rem;">Why Ripple & More?</h2>
+        <ul>
+          <li><strong>AI-First:</strong> Every venture is powered by automation and intelligent systems built for scale.</li>
+          <li><strong>Africa-Focused:</strong> We understand African markets, mobile money, and the unique opportunities across the continent.</li>
+          <li><strong>Crypto-Native:</strong> From payments to education — digital assets are built into everything we do.</li>
+          <li><strong>Multi-Venture:</strong> One parent company. Multiple focused ventures. Each solving a specific problem for a specific market.</li>
+          <li><strong>Ghanaian Roots, Pan-African Vision:</strong> Born in Ghana. Built for Africa. Serving the Continent.</li>
+        </ul>
+        
+        <h2 style="font-size: 1.5rem; margin-top: 2rem; margin-bottom: 1rem;">Latest Blog Posts</h2>
+        <ul>
+          <li><a href="/blog/african-startups-outperform-2027">Why African Startups Will Outperform US Competitors by 2027</a></li>
+          <li><a href="/blog/built-8-ventures-solo">I Built 8 Ventures Without a Team - The Stack</a></li>
+          <li><a href="/blog/claude-vs-chatgpt-agents">Why Claude is Better Than ChatGPT for Building Real AI Agents</a></li>
+          <li><a href="/blog/crypto-africa-real-use-cases">Crypto in Africa: Real Use Cases vs. Silicon Valley Dreams</a></li>
+          <li><a href="/blog/ai-customer-agents-ghana">How AI Customer Agents Are Replacing Support Teams in Ghana</a></li>
+        </ul>
+        
+        <h2 style="font-size: 1.5rem; margin-top: 2rem; margin-bottom: 1rem;">Contact</h2>
+        <p>Email: <a href="mailto:hello@rpnmore.com">hello@rpnmore.com</a></p>
+        <p>Website: <a href="https://rpnmore.com">https://rpnmore.com</a></p>
+        <p>Twitter: <a href="https://twitter.com/rpnmore">@rpnmore</a></p>
+        
+        <p style="margin-top: 2rem; color: #888; font-size: 0.875rem;">&copy; 2024-2026 Ripple & More Limited. All rights reserved.</p>
+      </div>
+    </noscript>
   </body>
 </html>
